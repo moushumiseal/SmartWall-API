@@ -7,14 +7,17 @@ package edu.sg.nus.iss.smartwall.resource.action;
 
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiAction;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.util.Constants;
+import javax.ejb.Stateless;
 import javax.json.JsonObject;
 
 /**
  *
  * @author ethi
  */
-public class Weather extends ApiAction { 
+@Stateless
+public class WeatherService{ 
 
     private String geocity;
 
@@ -36,20 +39,17 @@ public class Weather extends ApiAction {
         this.geocity = geocity;
     }
 
-    public Weather(JsonObject parameters) {
-        
-        geocity = parameters.getString(CITY);
-    }
+    public WeatherService() {
+      
+    }    
     
-    
-    @Override
     public ApiResponse process() {
         
         String query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + geocity + "\")";
         
-        String URL = getURL(Constants.WEATHER_URL + "?format=json&q=" , query);
+        String URL = ApiHelper.getURL(Constants.WEATHER_URL + "?format=json&q=" , query);
         
-        JsonObject result = getHttpResponse(URL);
+        JsonObject result = ApiHelper.getHttpResponse(URL);
         
         String output = result.getJsonObject(QUERY)
                               .getJsonObject(RESULTS)

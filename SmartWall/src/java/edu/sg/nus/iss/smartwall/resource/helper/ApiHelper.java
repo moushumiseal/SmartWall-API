@@ -6,6 +6,7 @@
 package edu.sg.nus.iss.smartwall.resource.helper;
 
 import edu.sg.nus.iss.smartwall.resource.DailogFlowWebhookResource;
+import static edu.sg.nus.iss.smartwall.resource.helper.ApiAction.UTF;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
@@ -19,15 +20,11 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author ethi
+ * @author SmartWall
  */
-public abstract class ApiAction {
-
-     public static final String UTF = "UTF-8";
+public class ApiHelper {
     
-    protected abstract ApiResponse process();
-    
-    protected String getURL(String basepath , String query){
+    public static String getURL(String basepath , String query){
         
         String url = null;
         
@@ -43,13 +40,13 @@ public abstract class ApiAction {
         return url;
     }
     
-    protected JsonObject getHttpResponse(String URL){
+    public static JsonObject getHttpResponse(String url){
         
-        System.out.println(URL);
+        Logger.getLogger(DailogFlowWebhookResource.class.getName()).log(Level.INFO, url);
+        System.out.println(url);
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(URL);
+        WebTarget target = client.target(url);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         return invocation.get(JsonObject.class);
     }
-    
 }

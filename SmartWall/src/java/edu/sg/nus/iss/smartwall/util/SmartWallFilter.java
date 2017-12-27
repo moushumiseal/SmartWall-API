@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sg.nus.iss.smartwall.resource;
+package edu.sg.nus.iss.smartwall.util;
 
 import java.io.IOException;
 import javax.ws.rs.NotAuthorizedException;
@@ -27,8 +27,8 @@ public class SmartWallFilter implements ContainerRequestFilter {
         System.out.println("*******Request:="+requestContext.getUriInfo().getQueryParameters());
         System.out.println("*******Request:="+requestContext.getEntityStream().toString());
         System.out.println(requestContext.getPropertyNames());
-        String authHeader = requestContext.getHeaderString("SmartWallHeader");
-        if (authHeader == null || !authHeader.equals("SmartWall")) {
+        String authHeader = requestContext.getHeaderString("smartwallheader");
+        if (authHeader == null || !authHeader.equals("smartwall")) {
             throw new NotAuthorizedException("Illegal Access");
         }
     }

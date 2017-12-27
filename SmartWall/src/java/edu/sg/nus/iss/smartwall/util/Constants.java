@@ -18,4 +18,6 @@ public class Constants {
     
     // Services   
     public static final String ACTION_WEATHER = "Weather";
+    public static final String ACTION_RESTAURANT = "Restaurant";
+    public static final String ACTION_EVENT = "Event";
 }

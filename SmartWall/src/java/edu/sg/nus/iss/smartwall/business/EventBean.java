@@ -6,6 +6,8 @@
 package edu.sg.nus.iss.smartwall.business;
 
 import edu.sg.nus.iss.smartwall.model.Event;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.util.Constants;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -36,5 +38,18 @@ public class EventBean {
     public List<Event> findByName(String name) {
         TypedQuery<Event> query = em.createQuery("select t from Event t where t.name = :name", Event.class);
         return (query.setParameter("name",name).getResultList());
+    }
+    
+    public ApiResponse process(String name) {
+        
+        StringBuffer sb = new StringBuffer();
+        
+        for(Event event : findByName(name)){
+        
+            sb.append(event.getName()+" Event is on "+event.getDate()+" at "+event.getLocation()+" from "+event.getStartTime()+" to "+event.getEndTime()+'\n');
+        }
+                           
+        
+        return new ApiResponse(sb.toString() , sb.toString() , Constants.ACTION_EVENT);
     }
 }

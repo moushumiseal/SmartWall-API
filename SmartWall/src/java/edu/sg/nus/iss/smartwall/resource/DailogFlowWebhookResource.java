@@ -5,7 +5,8 @@
  */
 package edu.sg.nus.iss.smartwall.resource;
 
-import edu.sg.nus.iss.smartwall.resource.action.Weather;
+import edu.sg.nus.iss.smartwall.business.EventBean;
+import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiAction;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
@@ -30,6 +31,13 @@ public class DailogFlowWebhookResource {
     public static final String PARAM_ACTION = "action";
     public static final String PARAM_PARAMETERS = "parameters";
     
+     public static final String PARAM_CITY = "geo-city";
+     public static final String PARAM_EVENT_NAME = "event-name";
+    
+    @EJB private WeatherService weatherService;
+    @EJB private EventBean eventBean;
+    
+    
     @POST
     public Response post(JsonObject body) {
         
@@ -49,8 +57,26 @@ public class DailogFlowWebhookResource {
         switch (apiAction) {
 
             case Constants.ACTION_WEATHER:
-                apiResponse = new Weather(result.getJsonObject(PARAM_PARAMETERS)).process();
+                
+                System.out.println(Constants.ACTION_WEATHER);
+                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY));
+                apiResponse = weatherService.process();
                 break;
+                
+             case Constants.ACTION_EVENT:
+                
+                System.out.println(Constants.ACTION_EVENT);
+                
+                apiResponse = eventBean.process(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
+                break;
+                
+//              case Constants.ACTION_RESTAURANT:
+//                
+//                System.out.println(Constants.ACTION_RESTAURANT);
+//                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
+//                apiResponse = weatherService.process();
+//                break;  
+              
                 
             default:
                 break;

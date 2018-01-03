@@ -6,13 +6,11 @@
 package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
+import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
 import edu.sg.nus.iss.smartwall.resource.action.NewsService;
 import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiAction;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Path;
@@ -36,17 +34,18 @@ public class DailogFlowWebhookResource {
     
     public static final String PARAM_CITY = "geo-city";
     public static final String PARAM_EVENT_NAME = "event-name";
+    public static final String PARAM_WORD = "word";
     
-    // Injecting 
+    // Injections
     @EJB private WeatherService weatherService;
     @EJB private EventBean eventBean;
     @EJB private NewsService newsService;
+    @EJB private DictionaryService dictionaryService;
     
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(JsonObject body) {
-        
         ApiResponse apiResponse = null;
         JsonObject result = body.getJsonObject(PARAM_RESULT);
         String apiAction = result.getString(PARAM_ACTION);
@@ -60,12 +59,12 @@ public class DailogFlowWebhookResource {
             Logger.getLogger(DailogFlowWebhookResource.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        switch (apiAction) {
+        switch (apiAction.toLowerCase()) {
 
             case Constants.ACTION_WEATHER:
                 
                 System.out.println(Constants.ACTION_WEATHER);
-                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY));
+                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY).toLowerCase());
                 apiResponse = weatherService.process();
                 break;
                 
@@ -82,20 +81,13 @@ public class DailogFlowWebhookResource {
                 
                 apiResponse = newsService.process();
                 break;
+            
+            case Constants.ACTION_DICTIONARY:
                 
-//              case Constants.ACTION_RESTAURANT:
-//                
-//                System.out.println(Constants.ACTION_RESTAURANT);
-//                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
-//                apiResponse = weatherService.process();
-//                break;                  
-//              case Constants.ACTION_RESTAURANT:
-//                
-//                System.out.println(Constants.ACTION_RESTAURANT);
-//                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
-//                apiResponse = weatherService.process();
-//                break;  
-              
+                System.out.println(Constants.ACTION_DICTIONARY);
+                dictionaryService.setWord(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_WORD));
+                apiResponse = dictionaryService.process();
+                break;
                 
             default:
                 break;

@@ -24,6 +24,7 @@ public class NewsService {
     public static final String ARTICLES = "articles";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
+    public static final String[] ORDINAL = {"First", "Second","Third", "Fourth", "Fifth"};
     
     public NewsService(){
         
@@ -38,19 +39,15 @@ public class NewsService {
         JsonArray articles =  result.getJsonArray(ARTICLES);
         
         speech = "Top five headlines from BBC News. ";
-        displayText = "Top five headlines from BBC News. '\n'";
         
         for (int i = 0; i < 5; i++) {
-            speech += articles.getJsonObject(i).getString(TITLE)
+            speech += ORDINAL[i] + " Headlines " + ": " + articles.getJsonObject(i).getString(TITLE)
                     + ". "
-                    + articles.getJsonObject(i).getString(DESCRIPTION)
-                    + ". ";
-            displayText += "Headlines " + i + " " + articles.getJsonObject(i).getString(TITLE)
-                    + ". "
-                    + articles.getJsonObject(i).getString(DESCRIPTION)
-                    + ". ";
+                    + articles.getJsonObject(i).getString(DESCRIPTION); 
         }
-                
+            
+        displayText = speech;
+        
         return new ApiResponse(speech , displayText , Constants.ACTION_NEWS);
     }
     

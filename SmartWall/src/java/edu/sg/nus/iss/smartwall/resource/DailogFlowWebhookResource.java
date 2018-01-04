@@ -6,18 +6,19 @@
 package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
+import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
+import edu.sg.nus.iss.smartwall.resource.action.NewsService;
 import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiAction;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -31,16 +32,20 @@ public class DailogFlowWebhookResource {
     public static final String PARAM_ACTION = "action";
     public static final String PARAM_PARAMETERS = "parameters";
     
-     public static final String PARAM_CITY = "geo-city";
-     public static final String PARAM_EVENT_NAME = "event-name";
+    public static final String PARAM_CITY = "geo-city";
+    public static final String PARAM_EVENT_NAME = "event-name";
+    public static final String PARAM_WORD = "word";
     
+    // Injections
     @EJB private WeatherService weatherService;
     @EJB private EventBean eventBean;
+    @EJB private NewsService newsService;
+    @EJB private DictionaryService dictionaryService;
     
     
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response post(JsonObject body) {
-        
         ApiResponse apiResponse = null;
         JsonObject result = body.getJsonObject(PARAM_RESULT);
         String apiAction = result.getString(PARAM_ACTION);
@@ -54,29 +59,35 @@ public class DailogFlowWebhookResource {
             Logger.getLogger(DailogFlowWebhookResource.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        switch (apiAction) {
+        switch (apiAction.toLowerCase()) {
 
             case Constants.ACTION_WEATHER:
                 
                 System.out.println(Constants.ACTION_WEATHER);
-                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY));
+                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY).toLowerCase());
                 apiResponse = weatherService.process();
                 break;
                 
-             case Constants.ACTION_EVENT:
+            case Constants.ACTION_EVENT:
                 
                 System.out.println(Constants.ACTION_EVENT);
                 
                 apiResponse = eventBean.process(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
                 break;
                 
-//              case Constants.ACTION_RESTAURANT:
-//                
-//                System.out.println(Constants.ACTION_RESTAURANT);
-//                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
-//                apiResponse = weatherService.process();
-//                break;  
-              
+            case Constants.ACTION_NEWS:
+                
+                System.out.println(Constants.ACTION_NEWS);
+                
+                apiResponse = newsService.process();
+                break;
+            
+            case Constants.ACTION_DICTIONARY:
+                
+                System.out.println(Constants.ACTION_DICTIONARY);
+                dictionaryService.setWord(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_WORD));
+                apiResponse = dictionaryService.process();
+                break;
                 
             default:
                 break;

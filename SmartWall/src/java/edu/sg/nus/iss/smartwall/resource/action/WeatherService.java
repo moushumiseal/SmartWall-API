@@ -58,9 +58,9 @@ public class WeatherService{
                               .getJsonObject(CONDITIONS)
                               .getString(TEMP);
         
-        String speech = "The temperature at " + geocity + " is " + output;
+        String speech = "The temperature at " + geocity + " is " + output + "F";
         
-        String displayText = "The temperature at " + geocity + " is " + output;
+        String displayText = "The temperature at " + geocity + " is " + output + "F";
                 
         return new ApiResponse(speech , displayText , Constants.ACTION_WEATHER);
     }

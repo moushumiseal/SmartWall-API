@@ -43,7 +43,7 @@ public class ApiHelper {
     public static JsonObject getHttpResponse(String url){
         
         Logger.getLogger(DailogFlowWebhookResource.class.getName()).log(Level.INFO, url);
-        System.out.println(url);
+        System.out.println("___***********____"+url);
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(url);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);

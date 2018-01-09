@@ -28,6 +28,7 @@ public class WeatherService{
     public static final String ITEM = "item";
     public static final String CONDITIONS = "condition";
     public static final String TEMP = "temp";
+    public static final String TEXT = "text";
         
     public String getGeocity() {
         
@@ -45,6 +46,7 @@ public class WeatherService{
     
     public ApiResponse process() {
         
+        String speech, displayText;
         String query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + geocity + "\")";
         
         String URL = ApiHelper.getURL(Constants.WEATHER_URL + "?format=json&q=" , query);
@@ -57,12 +59,28 @@ public class WeatherService{
                               .getJsonObject(ITEM)
                               .getJsonObject(CONDITIONS)
                               .getString(TEMP);
+        String weather = result.getJsonObject(QUERY)
+                              .getJsonObject(RESULTS)
+                              .getJsonObject(CHANNEL)
+                              .getJsonObject(ITEM)
+                              .getJsonObject(CONDITIONS)
+                              .getString(TEXT);
         
-        String speech = "The temperature at " + geocity + " is " + output + "F";
-        
-        String displayText = "The temperature at " + geocity + " is " + output + "F";
+        if(output != null) {
+            double tempInCelsius = fahrenheitToCelsius(Double.parseDouble(output));
+            speech = "The temperature at " + geocity + " is " + tempInCelsius + " Celsius "
+                    + "and the weather is " + weather + ".";
+            displayText = speech;
+        } else {
+            speech = "Sorry, something went wrong while fetching the weather details for " + geocity + ".";
+            displayText = speech;
+        }
                 
         return new ApiResponse(speech , displayText , Constants.ACTION_WEATHER);
     }
     
+    private double fahrenheitToCelsius(double f) {
+        double celsius = 5 * (f-32)/9;
+        return Math.round(celsius * 100.0) / 100.0;
+    }
 }

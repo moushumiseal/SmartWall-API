@@ -27,6 +27,7 @@ public class BusStop implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private String bus;
 
     public Integer getId() {
         return id;
@@ -43,6 +44,17 @@ public class BusStop implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getBus()
+    {
+        return bus;
+    }
+    
+    public void setBus(String bus)
+    {
+        this.bus = bus;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -72,6 +84,7 @@ public class BusStop implements Serializable {
         return (Json.createObjectBuilder()
 				.add("testId", id)
 				.add("name", name)
+                                .add("buses",bus)
                                 .build());
     }
     

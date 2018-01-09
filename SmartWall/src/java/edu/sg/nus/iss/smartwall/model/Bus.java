@@ -6,6 +6,7 @@
 package edu.sg.nus.iss.smartwall.model;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -27,7 +28,7 @@ public class Bus implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    
+    private Time time;
 
     public Integer getId() {
         return id;
@@ -43,6 +44,16 @@ public class Bus implements Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setTiming(Time timing)
+    {
+        this.time=timing;
+    }
+    
+    public Time getTiming()
+    {
+        return time;
     }
     
     @Override
@@ -75,6 +86,7 @@ public class Bus implements Serializable {
         return (Json.createObjectBuilder()
 				.add("testId", id)
 				.add("name", name)
+                                .add("timings", time.toString())
                                 .build());
     }
 }

@@ -6,6 +6,7 @@
 package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.BusStopBean;
+import edu.sg.nus.iss.smartwall.model.Bus;
 import edu.sg.nus.iss.smartwall.model.BusStop;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,9 +39,13 @@ public class BusStopResource  {
         JsonArrayBuilder builder = Json.createArrayBuilder();
 
         busStops.forEach((t) -> {
-            builder.add(t.toJson());
+            //builder.add(t.toJson());
+            List<Bus> buses= busStopBean.findBusByName(t.getBus());
+            for(Bus b:buses)
+                {
+                    builder.add(b.toJson());
+                }
         });
-
         return (Response.ok(builder.build()).build());
     }
 

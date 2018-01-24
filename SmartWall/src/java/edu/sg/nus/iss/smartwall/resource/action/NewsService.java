@@ -38,15 +38,18 @@ public class NewsService {
         
         JsonArray articles =  result.getJsonArray(ARTICLES);
         
-        speech = "Top five headlines from BBC News. ";
+        displayText = "Top five headlines from BBC News. ";
         
         for (int i = 0; i < 5; i++) {
-            speech += ORDINAL[i] + " Headlines " + "- " + articles.getJsonObject(i).getString(TITLE)
+            displayText += ORDINAL[i] + " Headlines " + "- " + articles.getJsonObject(i).getString(TITLE)
                     + ". "
                     + articles.getJsonObject(i).getString(DESCRIPTION); 
         }
-            
-        displayText = speech;
+        
+        speech = ORDINAL[0] + " Headlines " + "- " + articles.getJsonObject(0).getString(TITLE)
+                    + ". "
+                    + articles.getJsonObject(0).getString(DESCRIPTION);
+        
         
         speech = "speech:" + speech + ", display:" + displayText;
         

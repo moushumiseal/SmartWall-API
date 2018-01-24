@@ -41,12 +41,14 @@ public class NewsService {
         speech = "Top five headlines from BBC News. ";
         
         for (int i = 0; i < 5; i++) {
-            speech += ORDINAL[i] + " Headlines " + ": " + articles.getJsonObject(i).getString(TITLE)
+            speech += ORDINAL[i] + " Headlines " + "- " + articles.getJsonObject(i).getString(TITLE)
                     + ". "
                     + articles.getJsonObject(i).getString(DESCRIPTION); 
         }
             
         displayText = speech;
+        
+        speech = "speech:" + speech + ", display:" + displayText;
         
         return new ApiResponse(speech , displayText , Constants.ACTION_NEWS);
     }

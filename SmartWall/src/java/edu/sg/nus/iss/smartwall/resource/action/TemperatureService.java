@@ -17,7 +17,7 @@ import javax.json.JsonObject;
  * @author ethi
  */
 @Stateless
-public class WeatherService{ 
+public class TemperatureService{ 
 
     private String geocity;
 
@@ -40,7 +40,7 @@ public class WeatherService{
         this.geocity = geocity;
     }
 
-    public WeatherService() {
+    public TemperatureService() {
       
     }    
     
@@ -49,7 +49,7 @@ public class WeatherService{
         String speech, displayText;
         String query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + geocity + "\")";
         
-        String URL = ApiHelper.getURL(Constants.WEATHER_URL + "?format=json&q=" , query);
+        String URL = ApiHelper.getURL(Constants.TEMPERATURE_URL + "?format=json&q=" , query);
         
         JsonObject result = ApiHelper.getHttpResponse(URL);
         
@@ -67,6 +67,7 @@ public class WeatherService{
                               .getString(TEXT);
         
         if(output != null) {
+            System.out.println(output);
             double tempInCelsius = fahrenheitToCelsius(Double.parseDouble(output));
             speech = "The temperature at " + geocity + " is " + tempInCelsius + " Celsius "
                     + "and the weather is " + weather + ".";
@@ -76,7 +77,7 @@ public class WeatherService{
             displayText = speech;
         }
                 
-        return new ApiResponse(speech , displayText , Constants.ACTION_WEATHER);
+        return new ApiResponse(speech , displayText , Constants.ACTION_TEMPERATURE);
     }
     
     private double fahrenheitToCelsius(double f) {

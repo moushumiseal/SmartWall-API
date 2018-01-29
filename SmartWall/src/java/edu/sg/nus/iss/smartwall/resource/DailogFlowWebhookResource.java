@@ -8,7 +8,7 @@ package edu.sg.nus.iss.smartwall.resource;
 import edu.sg.nus.iss.smartwall.business.EventBean;
 import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
 import edu.sg.nus.iss.smartwall.resource.action.NewsService;
-import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
+import edu.sg.nus.iss.smartwall.resource.action.TemperatureService;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.EJB;
@@ -37,7 +37,7 @@ public class DailogFlowWebhookResource {
     public static final String PARAM_WORD = "word";
     
     // Injections
-    @EJB private WeatherService weatherService;
+    @EJB private TemperatureService temperatureService;
     @EJB private EventBean eventBean;
     @EJB private NewsService newsService;
     @EJB private DictionaryService dictionaryService;
@@ -61,11 +61,11 @@ public class DailogFlowWebhookResource {
 
         switch (apiAction.toLowerCase()) {
 
-            case Constants.ACTION_WEATHER:
+            case Constants.ACTION_TEMPERATURE:
                 
-                System.out.println(Constants.ACTION_WEATHER);
-                weatherService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY).toLowerCase());
-                apiResponse = weatherService.process();
+                System.out.println(Constants.ACTION_TEMPERATURE);
+                temperatureService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY).toLowerCase());
+                apiResponse = temperatureService.process();
                 break;
                 
             case Constants.ACTION_EVENT:

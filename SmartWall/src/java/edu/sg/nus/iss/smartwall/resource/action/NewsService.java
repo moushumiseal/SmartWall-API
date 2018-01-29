@@ -37,16 +37,21 @@ public class NewsService {
         JsonObject result = ApiHelper.getHttpResponse(URL);
         
         JsonArray articles =  result.getJsonArray(ARTICLES);
-        
-        speech = "Top five headlines from BBC News.\n\n";
+
+        displayText = "Top five headlines from BBC News. ";
         
         for (int i = 0; i < 5; i++) {
-            speech += ORDINAL[i] + " Headlines " + ": " + articles.getJsonObject(i).getString(TITLE)
+            displayText += ORDINAL[i] + " Headlines " + "- " + articles.getJsonObject(i).getString(TITLE)
                     + ". "
                     + articles.getJsonObject(i).getString(DESCRIPTION) +"\n\n"; 
         }
-            
-        displayText = speech;
+        
+        speech = ORDINAL[0] + " Headlines " + "- " + articles.getJsonObject(0).getString(TITLE)
+                    + ". "
+                    + articles.getJsonObject(0).getString(DESCRIPTION);
+        
+        
+        speech = "speech:" + speech + ", display:" + displayText;
         
         return new ApiResponse(speech , displayText , Constants.ACTION_NEWS);
     }

@@ -18,18 +18,12 @@ import javax.json.JsonObject;
 
 /**
  *
- * @author Moushumi Seal
+ * @author Aakash
  * 
  */
 @Stateless
-public class RestaurantService {
-
-    public static final String SOURCE = "bbc-news";
-    public static final String ARTICLES = "articles";
-    public static final String TITLE = "title";
-    public static final String DESCRIPTION = "description";
-    public static final String[] ORDINAL = {"First", "Second","Third", "Fourth", "Fifth"};
-     @EJB private RestaurantBean restaurantBean;
+public class RestaurantService {    
+    @EJB private RestaurantBean restaurantBean;
     
     public RestaurantService(){
         

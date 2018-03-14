@@ -85,3 +85,4 @@ hs_err_pid*
 
 /SmartWall/dist/
 /SmartWall/nbproject/private/
+*.properties

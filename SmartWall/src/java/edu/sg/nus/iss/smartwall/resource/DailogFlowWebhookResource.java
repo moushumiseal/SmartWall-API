@@ -6,8 +6,10 @@
 package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
+import edu.sg.nus.iss.smartwall.business.RestaurantBean;
 import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
 import edu.sg.nus.iss.smartwall.resource.action.NewsService;
+import edu.sg.nus.iss.smartwall.resource.action.RestaurantService;
 import edu.sg.nus.iss.smartwall.resource.action.TemperatureService;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
@@ -41,6 +43,8 @@ public class DailogFlowWebhookResource {
     @EJB private EventBean eventBean;
     @EJB private NewsService newsService;
     @EJB private DictionaryService dictionaryService;
+    @EJB private RestaurantService restaurantService;
+   
     
     
     @POST
@@ -87,6 +91,13 @@ public class DailogFlowWebhookResource {
                 System.out.println(Constants.ACTION_DICTIONARY);
                 dictionaryService.setWord(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_WORD));
                 apiResponse = dictionaryService.process();
+                break;
+                
+            case Constants.ACTION_RESTAURANT:
+                
+                System.out.println(Constants.ACTION_RESTAURANT);
+                
+                apiResponse = restaurantService.process();
                 break;
                 
             default:

@@ -81,11 +81,21 @@ public class BusService {
                 break;
             case "computer centre":
                 sp.append("A2, B1 or D1.");
-                
+
                 dp.append("A2").append(computeArrivingTime(buses.get("A2")));
                 dp.append("\nB1").append(computeArrivingTime(buses.get("B1")));
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
-              
+
+                break;
+            default:
+                sp.setLength(0);
+                dp.setLength(0);
+                sp.append("speech: Sorry, I don't know which bus to take for ")
+                        .append(this.busstopName);
+
+                dp.append("display: ")
+                        .append("Sorry, I don't know which bus to take for ")
+                        .append(this.busstopName);;
                 break;
         }
 
@@ -96,20 +106,21 @@ public class BusService {
         LocalTime now = LocalTime.now();
         StringBuilder sb = new StringBuilder();
         long diff = ChronoUnit.MINUTES.between(startTime, now);
-        if(diff % INTERVAL == 0)
+        if (diff % INTERVAL == 0) {
             sb.append("\nNext Bus : Arriving")
                     .append("\nSubsequent bus: ")
                     .append(INTERVAL)
                     .append(" minutes");
-        else
+        } else {
             sb.append("\nNext Bus : ")
                     .append((INTERVAL - (diff % INTERVAL)))
                     .append("minutes")
                     .append("\nSubsequent bus: ")
                     .append(INTERVAL + (INTERVAL - (diff % INTERVAL)))
                     .append(" minutes");
-        
-        return sb.toString() ;
+        }
+
+        return sb.toString();
     }
 
 }

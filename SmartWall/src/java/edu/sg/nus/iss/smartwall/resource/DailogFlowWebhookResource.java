@@ -33,11 +33,11 @@ public class DailogFlowWebhookResource {
     public static final String PARAM_RESULT = "result";
     public static final String PARAM_ACTION = "action";
     public static final String PARAM_PARAMETERS = "parameters";
-    
+
     public static final String PARAM_CITY = "geo-city";
     public static final String PARAM_EVENT_NAME = "event-name";
     public static final String PARAM_WORD = "word";
-    
+
     // Injections
     @EJB private TemperatureService temperatureService;
     @EJB private EventBean eventBean;
@@ -45,8 +45,6 @@ public class DailogFlowWebhookResource {
     @EJB private DictionaryService dictionaryService;
     @EJB private RestaurantService restaurantService;
    
-    
-    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(JsonObject body) {
@@ -62,58 +60,55 @@ public class DailogFlowWebhookResource {
         } catch (Exception ex) {
             Logger.getLogger(DailogFlowWebhookResource.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-
         switch (apiAction.toLowerCase()) {
 
             case Constants.ACTION_TEMPERATURE:
-                
+
                 System.out.println(Constants.ACTION_TEMPERATURE);
                 temperatureService.setGeocity(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_CITY).toLowerCase());
                 apiResponse = temperatureService.process();
                 break;
-                
+
             case Constants.ACTION_EVENT:
-                
+
                 System.out.println(Constants.ACTION_EVENT);
-                
+
                 apiResponse = eventBean.process(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_EVENT_NAME));
                 break;
-                
+
             case Constants.ACTION_NEWS:
-                
+
                 System.out.println(Constants.ACTION_NEWS);
-                
+
                 apiResponse = newsService.process();
                 break;
-            
+
             case Constants.ACTION_DICTIONARY:
-                
+
                 System.out.println(Constants.ACTION_DICTIONARY);
                 dictionaryService.setWord(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_WORD));
                 apiResponse = dictionaryService.process();
-                break;
-                
+                break;   
             case Constants.ACTION_RESTAURANT:
                 
                 System.out.println(Constants.ACTION_RESTAURANT);
                 
                 apiResponse = restaurantService.process();
                 break;
-                
             default:
                 break;
         }
 
         Response response = null;
-        
-        if(null != apiResponse){
-        
-            response =  Response.ok(apiResponse.getContent()).build();
-        }else{
-        
+
+        if (null != apiResponse) {
+
+            response = Response.ok(apiResponse.getContent()).build();
+        } else {
+
             response = Response.noContent().build();
         }
-        
+
         return response;
     }
 

@@ -7,12 +7,16 @@ package edu.sg.nus.iss.smartwall.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -45,7 +49,7 @@ public class BusStop implements Serializable {
         this.name = name;
     }
     
-    public String getBus()
+     public String getBus()
     {
         return bus;
     }

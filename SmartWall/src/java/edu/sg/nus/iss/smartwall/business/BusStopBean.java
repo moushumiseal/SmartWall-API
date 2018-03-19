@@ -6,10 +6,10 @@
 package edu.sg.nus.iss.smartwall.business;
 
 import edu.sg.nus.iss.smartwall.model.Bus;
+import edu.sg.nus.iss.smartwall.model.BusStop;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import edu.sg.nus.iss.smartwall.model.BusStop;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Entity;

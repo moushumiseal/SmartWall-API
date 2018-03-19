@@ -7,6 +7,7 @@ package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
 import edu.sg.nus.iss.smartwall.business.RestaurantBean;
+import edu.sg.nus.iss.smartwall.resource.action.BusService;
 import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
 import edu.sg.nus.iss.smartwall.resource.action.NewsService;
 import edu.sg.nus.iss.smartwall.resource.action.RestaurantService;
@@ -37,6 +38,7 @@ public class DailogFlowWebhookResource {
     public static final String PARAM_CITY = "geo-city";
     public static final String PARAM_EVENT_NAME = "event-name";
     public static final String PARAM_WORD = "word";
+    public static final String PARAM_BUS_STOP = "busstop-name";
 
     // Injections
     @EJB private TemperatureService temperatureService;
@@ -44,6 +46,7 @@ public class DailogFlowWebhookResource {
     @EJB private NewsService newsService;
     @EJB private DictionaryService dictionaryService;
     @EJB private RestaurantService restaurantService;
+    @EJB private BusService busService;
    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -95,6 +98,13 @@ public class DailogFlowWebhookResource {
                 
                 apiResponse = restaurantService.process();
                 break;
+                
+            case Constants.ACTION_BUSSTOP:
+
+                System.out.println(Constants.ACTION_BUSSTOP);
+                busService.setBusstopName(result.getJsonObject(PARAM_PARAMETERS).getString(PARAM_BUS_STOP).toLowerCase());
+                apiResponse = busService.process();
+                break;  
             default:
                 break;
         }

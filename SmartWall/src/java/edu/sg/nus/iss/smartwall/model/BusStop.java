@@ -32,6 +32,15 @@ public class BusStop implements Serializable {
     private Integer id;
     private String name;
     private String bus;
+    
+    public BusStop(){
+        
+    }
+    
+    public BusStop(String name, String bus){
+        this.name = name;
+        this.bus = bus;
+    }
 
     public Integer getId() {
         return id;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sg.nus.iss.smartwall.resource;
+package edu.sg.nus.iss.smartwall.rest;
 
 import edu.sg.nus.iss.smartwall.business.BusBean;
 import edu.sg.nus.iss.smartwall.model.Bus;
@@ -33,11 +33,11 @@ public class BusResource  {
     @Path("{name}") // Getting test by Id
     public Response get(@PathParam("name") String name) {
 
-        List<Bus> restaurants = busBean.findByName(name);
+        List<Bus> buses = busBean.findByName(name);
 
         JsonArrayBuilder builder = Json.createArrayBuilder();
 
-        restaurants.forEach((t) -> {
+        buses.forEach((t) -> {
             builder.add(t.toJson());
         });
 

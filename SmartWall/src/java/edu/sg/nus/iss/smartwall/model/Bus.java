@@ -8,12 +8,20 @@ package edu.sg.nus.iss.smartwall.model;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -29,6 +37,9 @@ public class Bus implements Serializable {
     private Integer id;
     private String name;
     private Time time;
+    /*@ManyToOne
+    @JoinColumn(name="busStop",referencedColumnName="name")
+    private BusStop busStop*/;
 
     public Integer getId() {
         return id;
@@ -46,6 +57,16 @@ public class Bus implements Serializable {
         this.name = name;
     }
     
+   /* public BusStop getBusStop()
+    {
+        return busStop;
+    }
+    
+    public void setBusStop(BusStop busStop)
+    {
+        this.busStop = busStop;
+    }
+   */
     public void setTiming(Time timing)
     {
         this.time=timing;

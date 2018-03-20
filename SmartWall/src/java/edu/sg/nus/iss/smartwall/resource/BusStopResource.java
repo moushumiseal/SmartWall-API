@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.sg.nus.iss.smartwall.resource;
+package edu.sg.nus.iss.smartwall.rest;
 
 import edu.sg.nus.iss.smartwall.business.BusStopBean;
-import edu.sg.nus.iss.smartwall.model.Bus;
 import edu.sg.nus.iss.smartwall.model.BusStop;
+import edu.sg.nus.iss.smartwall.model.Bus;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -28,8 +28,7 @@ import javax.ws.rs.core.Response;
 @Path("/busstop")
 public class BusStopResource  {
 @EJB
-    private BusStopBean busStopBean;
-
+    private BusStopBean busStopBean;     
     @GET
     @Path("{name}") // Getting test by Id
     public Response get(@PathParam("name") String name) {
@@ -53,12 +52,14 @@ public class BusStopResource  {
     @Produces(MediaType.APPLICATION_JSON)
     public Response get() {
 
-        List<BusStop> events = busStopBean.getAllBusStops();
+        List<BusStop> busStops = busStopBean.getAllBusStops();
+        
 
         JsonArrayBuilder builder = Json.createArrayBuilder();
 
-        events.forEach((t) -> {
+        busStops.forEach((t) -> {
             builder.add(t.toJson());
+            
         });
 
         return (Response.ok(builder.build()).build());

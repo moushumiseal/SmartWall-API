@@ -24,6 +24,7 @@ public class Constants {
     public static final String ACTION_EVENT = "event";
     public static final String ACTION_NEWS = "news";
     public static final String ACTION_DICTIONARY = "meaning";
+    public static final String ACTION_BUSSTOP = "busstop";
     
     //API Keys
     public static final String NEWS_API_KEY = "068abd2372b14b219fa6255efca4994f";

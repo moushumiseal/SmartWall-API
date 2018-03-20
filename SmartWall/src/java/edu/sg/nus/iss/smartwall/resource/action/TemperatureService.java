@@ -56,7 +56,7 @@ public class TemperatureService{
         StringBuffer speech = new StringBuffer();
         StringBuffer displayText = new StringBuffer();
         
-        if(geocity.equalsIgnoreCase("singapore")){
+        if(geocity.equalsIgnoreCase("singapore") || geocity == null || geocity.isEmpty()){
             geocity = "Clementi";
         }
         

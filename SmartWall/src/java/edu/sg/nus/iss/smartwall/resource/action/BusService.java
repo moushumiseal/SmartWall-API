@@ -60,7 +60,7 @@ public class BusService {
                 .append(this.busstopName)
                 .append(" you can take ");
 
-        dp.append("display: ");
+        dp.append(", display: ");
 
         /*
          * Busstops and Buses:
@@ -94,12 +94,12 @@ public class BusService {
                 sp.append("speech: Sorry, I don't know which bus to take for ")
                         .append(this.busstopName);
 
-                dp.append("display: ")
+                dp.append(", display: ")
                         .append("Sorry, I don't know which bus to take for ")
                         .append(this.busstopName);;
                 break;
         }
-
+        sp.append(dp.toString());
         return new ApiResponse(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
     }
 

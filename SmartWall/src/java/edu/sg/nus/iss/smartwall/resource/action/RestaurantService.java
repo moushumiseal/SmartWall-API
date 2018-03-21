@@ -37,7 +37,7 @@ public class RestaurantService {
         StringBuilder dp= new StringBuilder();
         
         sp.append("speech: Restaurants at NUS are ");
-        dp.append("display: Restaurants at NUS are \n");
+        dp.append(", display: Restaurants at NUS are \n");
         
         for(Restaurant r : restaurants){
         
@@ -45,7 +45,7 @@ public class RestaurantService {
             dp.append(r.getName()+" at "+r.getStall()+"\n");
         }
            
-        return new ApiResponse(sp.toString() , dp.toString() , Constants.ACTION_RESTAURANT);
+        return new ApiResponse(sp.toString()+ dp.toString(),dp.toString(),Constants.ACTION_RESTAURANT);
     }
     
 }

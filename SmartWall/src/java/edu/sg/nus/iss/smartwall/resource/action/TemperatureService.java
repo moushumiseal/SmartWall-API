@@ -66,7 +66,7 @@ public class TemperatureService{
         
         JsonObject result = ApiHelper.getHttpResponse(URL);
         speech.append("speech:");
-        displayText.append("display:");
+        displayText.append(", display:");
         
         if(result.getJsonObject(QUERY).getJsonObject(RESULTS) == null){
             speech.append("Sorry, something went wrong while fetching the weather details for ")
@@ -133,7 +133,8 @@ public class TemperatureService{
             }
 
         }
-                
+        
+        speech.append(displayText.toString());
         return new ApiResponse(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
     }
     

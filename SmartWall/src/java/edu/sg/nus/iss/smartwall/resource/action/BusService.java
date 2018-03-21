@@ -80,6 +80,7 @@ public class BusService {
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
                 break;
             case "computer centre":
+            case "computer center":
                 sp.append("A2, B1 or D1.");
 
                 dp.append("A2").append(computeArrivingTime(buses.get("A2")));

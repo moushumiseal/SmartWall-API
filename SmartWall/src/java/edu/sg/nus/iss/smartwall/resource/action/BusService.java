@@ -5,16 +5,11 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.model.BusStop;
-import edu.sg.nus.iss.smartwall.model.Restaurant;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
 
@@ -73,11 +68,15 @@ public class BusService {
             case "kent ridge":
                 sp.append("A2.");
                 dp.append("A2").append(computeArrivingTime(buses.get("A2")));
+                sp.append(dp.toString());
+                
                 break;
             case "utown":
                 sp.append("B1 or D1.");
                 dp.append("B1").append(computeArrivingTime(buses.get("B1")));
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
+                sp.append(dp.toString());
+                
                 break;
             case "computer centre":
             case "computer center":
@@ -86,20 +85,20 @@ public class BusService {
                 dp.append("A2").append(computeArrivingTime(buses.get("A2")));
                 dp.append("\nB1").append(computeArrivingTime(buses.get("B1")));
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
-
+                sp.append(dp.toString());
+                
                 break;
             default:
                 sp.setLength(0);
                 dp.setLength(0);
-                sp.append("speech: Sorry, I don't know which bus to take for ")
-                        .append(this.busstopName);
+                sp.append("I didn't get that. Can you say it again?");
 
-                dp.append(", display: ")
+                dp.append("display: ")
                         .append("Sorry, I don't know which bus to take for ")
                         .append(this.busstopName);;
                 break;
         }
-        sp.append(dp.toString());
+        
         return new ApiResponse(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
     }
 

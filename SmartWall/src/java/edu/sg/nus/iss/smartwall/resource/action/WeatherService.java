@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import static edu.sg.nus.iss.smartwall.resource.action.NewsService.ARTICLES;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.util.Constants;
@@ -18,7 +12,7 @@ import javax.json.JsonObject;
  * @author ethi
  */
 @Stateless
-public class TemperatureService{ 
+public class WeatherService{ 
 
     private String geocity;
 
@@ -47,7 +41,7 @@ public class TemperatureService{
         this.geocity = geocity;
     }
 
-    public TemperatureService() {
+    public WeatherService() {
       
     }    
     
@@ -67,10 +61,10 @@ public class TemperatureService{
         JsonObject result = ApiHelper.getHttpResponse(URL);
         speech.append("speech:");
         displayText.append(", display:");
-        
-        if(result.getJsonObject(QUERY).getJsonObject(RESULTS) == null){
-            speech.append("Sorry, something went wrong while fetching the weather details for ")
-                    .append(geocity);
+        System.out.println(result);
+        if(result.getJsonObject(QUERY).isNull(RESULTS)){
+            speech.append("I didn't get that. Can you say it again?");
+            
             displayText.append("Sorry, something went wrong while fetching the weather details for ")
                     .append(geocity);
         }else {
@@ -112,8 +106,8 @@ public class TemperatureService{
                     .append(" Celsius")
                     .append(" and the weather is ")
                     .append(weather);
-            speech.append(", code: ")
-                    .append(code);
+            /*speech.append(", code: ")
+                    .append(code);*/
             
             displayText.append("The weather forecast for next seven days -");
             
@@ -132,9 +126,9 @@ public class TemperatureService{
                            .append(sevenDaysForcast.getJsonObject(i).getString(TEXT));
             }
 
+            speech.append(displayText.toString());
         }
-        
-        speech.append(displayText.toString());
+
         return new ApiResponse(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
     }
     

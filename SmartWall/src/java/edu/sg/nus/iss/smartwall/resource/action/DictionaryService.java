@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.io.BufferedReader;
@@ -15,8 +9,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,27 +53,32 @@ public class DictionaryService {
             StringBuilder response = new StringBuilder();
 
             String line = null;
+            String output = "";
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
             
             JSONObject result = new JSONObject(response.toString());
             
-            String output = result.getJSONArray(RESULTS).getJSONObject(0)
-                            .getJSONArray(LEXICAL_ENTRIES).getJSONObject(0)
-                            .getJSONArray(ENTRIES).getJSONObject(0)
-                            .getJSONArray(SENSES).getJSONObject(0)
-                            .getJSONArray(DEFINITIONS).toString();
+    
+            output = result.getJSONArray(RESULTS).getJSONObject(0)
+                        .getJSONArray(LEXICAL_ENTRIES).getJSONObject(0)
+                        .getJSONArray(ENTRIES).getJSONObject(0)
+                        .getJSONArray(SENSES).getJSONObject(0)
+                        .getJSONArray(DEFINITIONS).toString();
 
-            speech = "According to the Oxford Dictionary, the meaning of "
-                    + word
-                    + " is "
-                    + output.substring(2, output.length()-2);
+            speech = "speech: According to the Oxford Dictionary, the meaning of "
+                + word
+                + " is "
+                + output.substring(2, output.length()-2);
+            
+            
             
             displayText = speech;
 
         } catch (IOException  | JSONException ex) {
             Logger.getLogger(DictionaryService.class.getName()).log(Level.SEVERE, null, ex);
+            speech = null;
         }
 
         return new ApiResponse(speech, displayText, Constants.ACTION_DICTIONARY);

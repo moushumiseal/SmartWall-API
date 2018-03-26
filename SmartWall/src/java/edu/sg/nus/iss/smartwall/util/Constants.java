@@ -19,7 +19,7 @@ public class Constants {
     public static final String DICTIONARY_URL = "https://od-api.oxforddictionaries.com:443/api/v1/entries";
     
     // Services   
-    public static final String ACTION_TEMPERATURE = "temperature";
+    public static final String ACTION_TEMPERATURE = "weather";
     public static final String ACTION_RESTAURANT = "restaurant";
     public static final String ACTION_EVENT = "event";
     public static final String ACTION_NEWS = "news";
@@ -31,5 +31,14 @@ public class Constants {
     public static final String DICTIONARY_API_KEY = "03e5acbc1e20bb65a7052f36b85d3a5b";
     public static final String DICTIONARY_APP_ID = "04ad3240";
     
-    
+    // Response parameters
+    public static final String PARAM_RESULT = "result";
+    public static final String PARAM_ACTION = "action";
+    public static final String PARAM_PARAMETERS = "parameters";
+
+    public static final String PARAM_CITY = "geo-city";
+    public static final String PARAM_EVENT_NAME = "event-name";
+    public static final String PARAM_WORD = "word";
+    public static final String PARAM_BUS_STOP = "busstop-name";
+    public static final String PARAM_RESOLVED_QUERY = "resolvedQuery";
 }

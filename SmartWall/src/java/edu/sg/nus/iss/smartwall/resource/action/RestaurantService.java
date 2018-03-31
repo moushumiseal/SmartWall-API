@@ -1,11 +1,9 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.business.RestaurantBean;
-import edu.sg.nus.iss.smartwall.model.Restaurant;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
-import java.util.List;
-import javax.ejb.EJB;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.Stateless;
 
 /**
@@ -15,28 +13,43 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class RestaurantService {    
-    @EJB private RestaurantBean restaurantBean;
+    //@EJB private RestaurantBean restaurantBean;
+    Map<String, String> restaurants;
     
     public RestaurantService(){
         
     }
     
+    private void init() {
+        this.restaurants = new HashMap<>();
+
+        this.restaurants.put("Flavors", "Utown");
+        this.restaurants.put("Techno edge", "Computer Center");
+        this.restaurants.put("The Terrace", "COM2");
+        this.restaurants.put("The Deck", "COM2");
+        this.restaurants.put("Fine Food", "Utown");
+        this.restaurants.put("Humble Origins", "Ventus");
+
+    }
+    
     public ApiResponse process() {
         
-        List<Restaurant> restaurants = restaurantBean.getAllRestaurants();
-        
+        init();
+             
         StringBuilder sp= new StringBuilder();
         StringBuilder dp= new StringBuilder();
         
         sp.append("speech: Restaurants at NUS are ");
         dp.append(", display: Restaurants at NUS are: \n");
-        
-        for(Restaurant r : restaurants){
-        
-            sp.append(r.getName());
-            dp.append(r.getName()+" at "+r.getStall()+"\n");
-        }
            
+        for(String name: restaurants.keySet()){
+            sp.append(name)
+              .append(" ");
+            dp.append(name)
+              .append(" at ")
+              .append(restaurants.get(name))
+              .append("\n");
+        }
         return new ApiResponse(sp.toString()+ dp.toString(),dp.toString(),Constants.ACTION_RESTAURANT);
     }
     

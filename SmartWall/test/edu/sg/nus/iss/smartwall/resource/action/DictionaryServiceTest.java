@@ -21,7 +21,6 @@ public class DictionaryServiceTest {
     @Before
     public void setUp() {
         dictionaryService = new DictionaryService();
-        dictionaryService.setWord("smart");
     }
     
     @After
@@ -33,9 +32,20 @@ public class DictionaryServiceTest {
      * Test of process method, of class DictionaryService.
      */
     @Test
-    public void testProcess() throws Exception {
-        System.out.println("DictionaryService: process()");
+    public void testProcessValidWord() throws Exception {
+        System.out.println("DictionaryService: testProcessValidWord()");
+        dictionaryService.setWord("smart");
         String expResult = "speech: According to the Oxford Dictionary, the meaning of smart is (of a person) clean, tidy, and well dressed";
+        ApiResponse result = dictionaryService.process();
+        assertEquals(expResult, result.getSpeech());
+        assertEquals("meaning", result.getSource());
+    }
+    
+    @Test
+    public void testProcessInvalidWord() throws Exception {
+        System.out.println("DictionaryService: testProcessInvalidWord()");
+        dictionaryService.setWord("Clementi");
+        String expResult = "I didn't get that. Can you say it again?";
         ApiResponse result = dictionaryService.process();
         assertEquals(expResult, result.getSpeech());
         assertEquals("meaning", result.getSource());

@@ -76,9 +76,9 @@ public class DictionaryService {
             
             displayText = speech;
 
-        } catch (IOException  | JSONException ex) {
+        } catch (IOException | JSONException ex) {
             Logger.getLogger(DictionaryService.class.getName()).log(Level.SEVERE, null, ex);
-            speech = null;
+            speech = "I didn't get that. Can you say it again?";
         }
 
         return new ApiResponse(speech, displayText, Constants.ACTION_DICTIONARY);

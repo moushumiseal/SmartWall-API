@@ -7,9 +7,9 @@ package edu.sg.nus.iss.smartwall.resource.action;
 
 import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -32,16 +32,15 @@ public class RestaurantServiceTest {
     /**
      * Test of process method, of class RestaurantService.
      */
-    //TODO
     @Test
     public void testProcess() throws Exception {
         System.out.println("RestaurantServiceTest: process()");
         String expResult = "speech: Restaurants at NUS ";
         
-        //TODO
-       /* ApiResponse resultResponse = restaurantService.process();
+       
+        ApiResponse resultResponse = restaurantService.process();
         String results[] = resultResponse.getSpeech().split("are");
-        assertEquals(expResult, results[0]);*/
+        Assert.assertEquals(expResult, results[0]);
     }
     
 }

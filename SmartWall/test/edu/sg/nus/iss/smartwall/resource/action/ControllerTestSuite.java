@@ -17,8 +17,8 @@ import org.junit.runners.Suite;
  * @author Moushumi Seal
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({edu.sg.nus.iss.smartwall.resource.action.BusServiceTest.class, edu.sg.nus.iss.smartwall.resource.action.DictionaryServiceTest.class, edu.sg.nus.iss.smartwall.resource.action.NewsServiceTest.class, edu.sg.nus.iss.smartwall.resource.action.WeatherServiceTest.class, edu.sg.nus.iss.smartwall.resource.action.RestaurantServiceTest.class})
-public class ServiceTestSuite {
+@Suite.SuiteClasses({edu.sg.nus.iss.smartwall.resource.action.BusControllerTest.class, edu.sg.nus.iss.smartwall.resource.action.DictionaryControllerTest.class, edu.sg.nus.iss.smartwall.resource.action.NewsControllerTest.class, edu.sg.nus.iss.smartwall.resource.action.WeatherControllerTest.class, edu.sg.nus.iss.smartwall.resource.action.RestaurantControllerTest.class})
+public class ControllerTestSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {

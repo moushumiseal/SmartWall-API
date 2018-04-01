@@ -1,12 +1,12 @@
 package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
-import edu.sg.nus.iss.smartwall.resource.action.BusService;
-import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
-import edu.sg.nus.iss.smartwall.resource.action.NewsService;
-import edu.sg.nus.iss.smartwall.resource.action.RestaurantService;
-import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.action.BusController;
+import edu.sg.nus.iss.smartwall.resource.action.DictionaryController;
+import edu.sg.nus.iss.smartwall.resource.action.NewsController;
+import edu.sg.nus.iss.smartwall.resource.action.RestaurantController;
+import edu.sg.nus.iss.smartwall.resource.action.WeatherController;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -23,24 +23,24 @@ public class ServiceMainController implements Serializable {
 
     // Injections
     @EJB
-    private WeatherService temperatureService;
+    private WeatherController temperatureService;
     @EJB
     private EventBean eventBean;
     @EJB
-    private NewsService newsService;
+    private NewsController newsService;
     @EJB
-    private DictionaryService dictionaryService;
+    private DictionaryController dictionaryService;
     @EJB
-    private RestaurantService restaurantService;
+    private RestaurantController restaurantService;
     @EJB
-    private BusService busService;
+    private BusController busService;
 
     public ServiceMainController() {
 
     }
 
     public Response requestService(JsonObject body) {
-        ApiResponse apiResponse = null;
+        Service apiResponse = null;
         Response response = null;
         JsonObject result = body.getJsonObject(Constants.PARAM_RESULT);
         String apiAction = result.getString(Constants.PARAM_ACTION);

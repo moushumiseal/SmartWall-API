@@ -25,7 +25,7 @@ public abstract class ApiAction {
 
      public static final String UTF = "UTF-8";
     
-    protected abstract ApiResponse process();
+    protected abstract Service process();
     
     protected String getURL(String basepath , String query){
         

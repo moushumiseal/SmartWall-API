@@ -6,7 +6,7 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
 import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.Stateless;
 import javax.json.JsonArray;
@@ -18,7 +18,7 @@ import javax.json.JsonObject;
  * 
  */
 @Stateless
-public class NewsService {
+public class NewsController {
 
     public static final String SOURCE = "bbc-news";
     public static final String ARTICLES = "articles";
@@ -26,11 +26,11 @@ public class NewsService {
     public static final String DESCRIPTION = "description";
     public static final String[] ORDINAL = {"First", "Second","Third", "Fourth", "Fifth"};
     
-    public NewsService(){
+    public NewsController(){
         
     }
     
-    public ApiResponse process() {
+    public Service process() {
         
         String URL = Constants.NEWS_URL + "?sources=" + SOURCE + "&apiKey=" + Constants.NEWS_API_KEY;
         String speech, displayText;
@@ -53,7 +53,7 @@ public class NewsService {
         
         speech = "speech:" + speech + ", display:" + displayText;
         
-        return new ApiResponse(speech , displayText , Constants.ACTION_NEWS);
+        return new Service(speech , displayText , Constants.ACTION_NEWS);
     }
     
 }

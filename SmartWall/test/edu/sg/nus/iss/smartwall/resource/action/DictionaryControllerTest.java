@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +15,12 @@ import static org.junit.Assert.*;
  *
  * @author mseal
  */
-public class DictionaryServiceTest {
+public class DictionaryControllerTest {
     
-    DictionaryService dictionaryService;
+    DictionaryController dictionaryService;
     @Before
     public void setUp() {
-        dictionaryService = new DictionaryService();
+        dictionaryService = new DictionaryController();
     }
     
     @After
@@ -29,14 +29,14 @@ public class DictionaryServiceTest {
     }
 
     /**
-     * Test of process method, of class DictionaryService.
+     * Test of process method, of class DictionaryController.
      */
     @Test
     public void testProcessValidWord() throws Exception {
         System.out.println("DictionaryService: testProcessValidWord()");
         dictionaryService.setWord("smart");
         String expResult = "speech: According to the Oxford Dictionary, the meaning of smart is (of a person) clean, tidy, and well dressed";
-        ApiResponse result = dictionaryService.process();
+        Service result = dictionaryService.process();
         assertEquals(expResult, result.getSpeech());
         assertEquals("meaning", result.getSource());
     }
@@ -46,7 +46,7 @@ public class DictionaryServiceTest {
         System.out.println("DictionaryService: testProcessInvalidWord()");
         dictionaryService.setWord("Clementi");
         String expResult = "I didn't get that. Can you say it again?";
-        ApiResponse result = dictionaryService.process();
+        Service result = dictionaryService.process();
         assertEquals(expResult, result.getSpeech());
         assertEquals("meaning", result.getSource());
     }

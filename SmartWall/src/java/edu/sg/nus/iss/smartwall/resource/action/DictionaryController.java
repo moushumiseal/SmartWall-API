@@ -1,6 +1,6 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import org.json.JSONObject;
  * @author Moushumi Seal
  */
 @Stateless
-public class DictionaryService {
+public class DictionaryController {
 
     public static final String LANGUAGE = "en";
     public static final String RESULTS = "results";
@@ -29,7 +29,7 @@ public class DictionaryService {
 
     private String word;
 
-    public DictionaryService() {
+    public DictionaryController() {
     }
 
     public String getWord() {
@@ -40,7 +40,7 @@ public class DictionaryService {
         this.word = word;
     }
 
-    public ApiResponse process() {
+    public Service process() {
         URL url;
         String speech = "", displayText = "";
         try {
@@ -77,11 +77,11 @@ public class DictionaryService {
             displayText = speech;
 
         } catch (IOException | JSONException ex) {
-            Logger.getLogger(DictionaryService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DictionaryController.class.getName()).log(Level.SEVERE, null, ex);
             speech = "I didn't get that. Can you say it again?";
         }
 
-        return new ApiResponse(speech, displayText, Constants.ACTION_DICTIONARY);
+        return new Service(speech, displayText, Constants.ACTION_DICTIONARY);
     }
 
 }

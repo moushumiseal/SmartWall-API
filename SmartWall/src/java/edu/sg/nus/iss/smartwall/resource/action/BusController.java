@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -18,13 +18,13 @@ import javax.ejb.Stateless;
  * @author Moushumi Seal
  */
 @Stateless
-public class BusService {
+public class BusController {
 
     private Map<String, LocalTime> buses;
     private String busstopName;
     private static final long INTERVAL = 15; // Buses arrive at intervals of 15 minutes
 
-    public BusService() {
+    public BusController() {
 
     }
 
@@ -46,7 +46,7 @@ public class BusService {
 
     }
 
-    public ApiResponse process() {
+    public Service process() {
         init();
         StringBuilder sp = new StringBuilder();
         StringBuilder dp = new StringBuilder();
@@ -99,7 +99,7 @@ public class BusService {
                 break;
         }
         
-        return new ApiResponse(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
+        return new Service(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
     }
 
     private String computeArrivingTime(LocalTime startTime) {

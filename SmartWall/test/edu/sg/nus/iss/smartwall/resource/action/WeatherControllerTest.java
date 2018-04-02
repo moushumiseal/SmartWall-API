@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,13 +18,13 @@ import static org.junit.Assert.*;
  *
  * @author Moushumi Seal
  */
-public class WeatherServiceTest {
+public class WeatherControllerTest {
     
-    WeatherService weatherService;
+    WeatherController weatherService;
     
     @Before
     public void setUp() {
-        weatherService = new WeatherService();
+        weatherService = new WeatherController();
     }
     
     @After
@@ -33,28 +33,28 @@ public class WeatherServiceTest {
     }
 
     /**
-     * Test of process method, of class WeatherService.
+     * Test of process method, of class WeatherController.
      */
    @Test
     public void testProcessValidCity() throws Exception {
         System.out.println("testProcessValidCity");
         weatherService.setGeocity("kolkata");
         String expResult = "speech:The temperature at kolkata ";
-        ApiResponse resultResponse = weatherService.process();
+        Service resultResponse = weatherService.process();
         String result[] = resultResponse.getSpeech().split("is");
         assertEquals(expResult, result[0]);
         assertEquals("weather", resultResponse.getSource());
     }
     
     /**
-     * Test of process method, of class WeatherService.
+     * Test of process method, of class WeatherController.
      */
     @Test
     public void testProcessInvalidCity() throws Exception {
         System.out.println("testProcessInvalidCity");
         weatherService.setGeocity("India");
         String expResult = "speech:I didn't get that. Can you say it again?";
-        ApiResponse resultResponse = weatherService.process();
+        Service resultResponse = weatherService.process();
         String result[] = resultResponse.getSpeech().split(",");
         assertEquals(expResult, result[0]);
         assertEquals("weather", resultResponse.getSource());

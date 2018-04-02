@@ -7,12 +7,12 @@ package edu.sg.nus.iss.smartwall.resource;
 
 import edu.sg.nus.iss.smartwall.business.EventBean;
 import edu.sg.nus.iss.smartwall.business.RestaurantBean;
-import edu.sg.nus.iss.smartwall.resource.action.BusService;
-import edu.sg.nus.iss.smartwall.resource.action.DictionaryService;
-import edu.sg.nus.iss.smartwall.resource.action.NewsService;
-import edu.sg.nus.iss.smartwall.resource.action.RestaurantService;
-import edu.sg.nus.iss.smartwall.resource.action.WeatherService;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.action.BusController;
+import edu.sg.nus.iss.smartwall.resource.action.DictionaryController;
+import edu.sg.nus.iss.smartwall.resource.action.NewsController;
+import edu.sg.nus.iss.smartwall.resource.action.RestaurantController;
+import edu.sg.nus.iss.smartwall.resource.action.WeatherController;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

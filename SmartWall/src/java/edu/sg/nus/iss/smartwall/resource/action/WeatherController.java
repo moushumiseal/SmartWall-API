@@ -1,6 +1,6 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.Stateless;
@@ -12,7 +12,7 @@ import javax.json.JsonObject;
  * @author ethi
  */
 @Stateless
-public class WeatherService{ 
+public class WeatherController{ 
 
     private String geocity;
 
@@ -41,11 +41,11 @@ public class WeatherService{
         this.geocity = geocity;
     }
 
-    public WeatherService() {
+    public WeatherController() {
       
     }    
     
-    public ApiResponse process() {
+    public Service process() {
         
         StringBuffer speech = new StringBuffer();
         StringBuffer displayText = new StringBuffer();
@@ -129,7 +129,7 @@ public class WeatherService{
             speech.append(displayText.toString());
         }
 
-        return new ApiResponse(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
+        return new Service(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
     }
     
     private double fahrenheitToCelsius(double f) {

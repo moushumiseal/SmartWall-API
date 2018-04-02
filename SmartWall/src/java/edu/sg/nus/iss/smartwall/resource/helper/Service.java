@@ -12,7 +12,7 @@ import javax.json.JsonObject;
  *
  * @author ethi
  */
-public class ApiResponse {
+public class Service {
     
     public static final String SPEECH = "speech";
     public static final String DISPLAY_TEXT = "displayText";
@@ -22,7 +22,7 @@ public class ApiResponse {
     private String displayText;
     private String source;
 
-    public ApiResponse(String speech, String displayText, String source) {
+    public Service(String speech, String displayText, String source) {
         this.speech = speech;
         this.displayText = displayText;
         this.source = source;

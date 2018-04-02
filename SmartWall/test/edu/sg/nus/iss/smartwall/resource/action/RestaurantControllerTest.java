@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
+import edu.sg.nus.iss.smartwall.resource.helper.Service;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,13 +15,13 @@ import org.junit.Test;
  *
  * @author Moushumi Seal
  */
-public class RestaurantServiceTest {
+public class RestaurantControllerTest {
     
-    RestaurantService restaurantService;
+    RestaurantController restaurantService;
     
     @Before
     public void setUp() {
-        restaurantService = new RestaurantService();
+        restaurantService = new RestaurantController();
     }
     
     @After
@@ -30,7 +30,7 @@ public class RestaurantServiceTest {
     }
 
     /**
-     * Test of process method, of class RestaurantService.
+     * Test of process method, of class RestaurantController.
      */
     @Test
     public void testProcess() throws Exception {
@@ -38,7 +38,7 @@ public class RestaurantServiceTest {
         String expResult = "speech: Restaurants at NUS ";
         
        
-        ApiResponse resultResponse = restaurantService.process();
+        Service resultResponse = restaurantService.process();
         String results[] = resultResponse.getSpeech().split("are");
         Assert.assertEquals(expResult, results[0]);
     }

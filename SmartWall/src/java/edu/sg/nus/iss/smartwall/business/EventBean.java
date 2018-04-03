@@ -6,7 +6,7 @@
 package edu.sg.nus.iss.smartwall.business;
 
 import edu.sg.nus.iss.smartwall.model.Event;
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,7 +40,7 @@ public class EventBean {
         return (query.setParameter("name",name).getResultList());
     }
     
-    public Service process(String name) {
+    public ApiResponse process(String name) {
         
         StringBuffer sb = new StringBuffer();
         
@@ -50,6 +50,6 @@ public class EventBean {
         }
                            
         
-        return new Service(sb.toString() , sb.toString() , Constants.ACTION_EVENT);
+        return new ApiResponse(sb.toString() , sb.toString() , Constants.ACTION_EVENT);
     }
 }

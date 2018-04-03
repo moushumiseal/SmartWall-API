@@ -1,7 +1,7 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.resource.helper.Service;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.Stateless;
 import javax.json.JsonArray;
@@ -45,7 +45,7 @@ public class WeatherController{
       
     }    
     
-    public Service process() {
+    public ApiResponse process() {
         
         StringBuffer speech = new StringBuffer();
         StringBuffer displayText = new StringBuffer();
@@ -56,9 +56,9 @@ public class WeatherController{
         
         String query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + geocity + "\")";
         
-        String URL = ApiHelper.getURL(Constants.TEMPERATURE_URL + "?format=json&q=" , query);
+        String URL = Service.getURL(Constants.TEMPERATURE_URL + "?format=json&q=" , query);
         
-        JsonObject result = ApiHelper.getHttpResponse(URL);
+        JsonObject result = Service.getHttpResponse(URL);
         speech.append("speech:");
         displayText.append(", display:");
         System.out.println(result);
@@ -129,7 +129,7 @@ public class WeatherController{
             speech.append(displayText.toString());
         }
 
-        return new Service(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
+        return new ApiResponse(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
     }
     
     private double fahrenheitToCelsius(double f) {

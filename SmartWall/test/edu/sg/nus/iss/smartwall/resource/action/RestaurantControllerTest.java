@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,7 +38,7 @@ public class RestaurantControllerTest {
         String expResult = "speech: Restaurants at NUS ";
         
        
-        Service resultResponse = restaurantService.process();
+        ApiResponse resultResponse = restaurantService.process();
         String results[] = resultResponse.getSpeech().split("are");
         Assert.assertEquals(expResult, results[0]);
     }

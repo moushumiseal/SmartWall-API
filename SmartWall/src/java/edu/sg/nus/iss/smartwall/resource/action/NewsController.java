@@ -5,8 +5,8 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.Stateless;
 import javax.json.JsonArray;
@@ -30,11 +30,11 @@ public class NewsController {
         
     }
     
-    public Service process() {
+    public ApiResponse process() {
         
         String URL = Constants.NEWS_URL + "?sources=" + SOURCE + "&apiKey=" + Constants.NEWS_API_KEY;
         String speech, displayText;
-        JsonObject result = ApiHelper.getHttpResponse(URL);
+        JsonObject result = Service.getHttpResponse(URL);
         
         JsonArray articles =  result.getJsonArray(ARTICLES);
 
@@ -53,7 +53,7 @@ public class NewsController {
         
         speech = "speech:" + speech + ", display:" + displayText;
         
-        return new Service(speech , displayText , Constants.ACTION_NEWS);
+        return new ApiResponse(speech , displayText , Constants.ACTION_NEWS);
     }
     
 }

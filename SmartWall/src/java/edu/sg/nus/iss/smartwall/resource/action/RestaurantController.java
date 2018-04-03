@@ -1,6 +1,6 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class RestaurantController {
 
     }
     
-    public Service process() {
+    public ApiResponse process() {
         
         init();
              
@@ -50,7 +50,7 @@ public class RestaurantController {
               .append(restaurants.get(name))
               .append("\n");
         }
-        return new Service(sp.toString()+ dp.toString(),dp.toString(),Constants.ACTION_RESTAURANT);
+        return new ApiResponse(sp.toString()+ dp.toString(),dp.toString(),Constants.ACTION_RESTAURANT);
     }
     
 }

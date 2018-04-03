@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class NewsControllerTest {
     public void testProcess() throws Exception {
         System.out.println("NewsService: process()");
         String expResult = "speech:First Headlines ";
-        Service result = newsService.process();
+        ApiResponse result = newsService.process();
         String results[] = result.getSpeech().split("-");
         assertEquals(expResult, results[0]);
         assertEquals("news", result.getSource());

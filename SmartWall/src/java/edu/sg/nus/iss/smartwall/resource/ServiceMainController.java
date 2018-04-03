@@ -6,7 +6,7 @@ import edu.sg.nus.iss.smartwall.resource.action.DictionaryController;
 import edu.sg.nus.iss.smartwall.resource.action.NewsController;
 import edu.sg.nus.iss.smartwall.resource.action.RestaurantController;
 import edu.sg.nus.iss.smartwall.resource.action.WeatherController;
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -40,7 +40,7 @@ public class ServiceMainController implements Serializable {
     }
 
     public Response requestService(JsonObject body) {
-        Service apiResponse = null;
+        ApiResponse apiResponse = null;
         Response response = null;
         JsonObject result = body.getJsonObject(Constants.PARAM_RESULT);
         String apiAction = result.getString(Constants.PARAM_ACTION);

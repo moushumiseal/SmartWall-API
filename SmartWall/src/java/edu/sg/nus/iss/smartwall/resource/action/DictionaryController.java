@@ -1,6 +1,6 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class DictionaryController {
         this.word = word;
     }
 
-    public Service process() {
+    public ApiResponse process() {
         URL url;
         String speech = "", displayText = "";
         try {
@@ -81,7 +81,7 @@ public class DictionaryController {
             speech = "I didn't get that. Can you say it again?";
         }
 
-        return new Service(speech, displayText, Constants.ACTION_DICTIONARY);
+        return new ApiResponse(speech, displayText, Constants.ACTION_DICTIONARY);
     }
 
 }

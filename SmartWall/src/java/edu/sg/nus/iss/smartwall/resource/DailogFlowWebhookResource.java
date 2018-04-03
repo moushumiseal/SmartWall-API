@@ -12,7 +12,7 @@ import edu.sg.nus.iss.smartwall.resource.action.DictionaryController;
 import edu.sg.nus.iss.smartwall.resource.action.NewsController;
 import edu.sg.nus.iss.smartwall.resource.action.RestaurantController;
 import edu.sg.nus.iss.smartwall.resource.action.WeatherController;
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

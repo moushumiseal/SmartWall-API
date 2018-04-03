@@ -8,7 +8,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 /**
- * NewsController class is the usecase controller class for displaying the
+ * NewsController class is the use case controller class for displaying the
  * top-5 news headlines.
  *
  * @author Moushumi Seal
@@ -17,10 +17,10 @@ import javax.json.JsonObject;
 @Stateless
 public class NewsController {
 
-    public NewsController() {
-
-    }
-
+    /**
+     * process request
+     * @return ApiResponse
+     */
     public ApiResponse process() {
 
         String URL = Constants.NEWS_URL + "?sources=" + Constants.SOURCE + "&apiKey=" + Constants.NEWS_API_KEY;

@@ -1,5 +1,9 @@
 package edu.sg.nus.iss.smartwall.util;
 
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author
@@ -63,4 +67,38 @@ public class Constants {
     public static final String DATE = "date";
     public static final String HIGH = "high";
     public static final String LOW = "low";
+    
+    public static final Map<String, String> restaurants = new HashMap<>();
+    
+     public static final Map<String, LocalTime> buses = new HashMap<>();
+
+       
+    
+    public static Map<String, String> getRestaurants(){
+        
+        if(restaurants.isEmpty()){
+            
+            restaurants.put("Flavors", "Utown");
+            restaurants.put("Techno edge", "Computer Center");
+            restaurants.put("The Terrace", "COM2");
+            restaurants.put("The Deck", "COM2");
+            restaurants.put("Fine Food", "Utown");
+            restaurants.put("Humble Origins", "Ventus");
+        }
+        
+        return restaurants;
+    }
+    
+     public static Map<String, LocalTime> getbuses(){
+        
+        if(buses.isEmpty()){
+            
+            buses.put("A1", LocalTime.parse("07:00:00"));
+            buses.put("B1", LocalTime.parse("07:05:00"));
+            buses.put("D1", LocalTime.parse("07:10:00"));
+            buses.put("A2", LocalTime.parse("07:15:00"));
+        }
+        
+        return buses;
+    }
 }

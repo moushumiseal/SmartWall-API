@@ -25,17 +25,26 @@ public class DictionaryController {
 
     private String word;
 
-    public DictionaryController() {
-    }
-
+    /**
+     * word
+     * @return String
+     */
     public String getWord() {
         return word;
     }
 
+    /**
+     * word
+     * @param word 
+     */
     public void setWord(String word) {
         this.word = word;
     }
 
+    /**
+     * process
+     * @return ApiResponse
+     */
     public ApiResponse process() {
 
         URL url;

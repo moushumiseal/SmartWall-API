@@ -10,7 +10,7 @@ import javax.json.JsonObject;
 
 /**
  *
- * @author ethi
+ * @author Moushumi seal
  */
 public class ApiResponse {
     
@@ -22,36 +22,71 @@ public class ApiResponse {
     private String displayText;
     private String source;
 
+    /**
+     * constructor
+     * @param speech
+     * @param displayText
+     * @param source 
+     */
     public ApiResponse(String speech, String displayText, String source) {
+        
         this.speech = speech;
         this.displayText = displayText;
         this.source = source;
     }
 
+    /**
+     * getter String
+     * @return 
+     */
     public String getSpeech() {
         return speech;
     }
 
+    /**
+    * setter
+    * @param speech 
+    */
     public void setSpeech(String speech) {
         this.speech = speech;
     }
 
+    /**
+     * getter String
+     * @return 
+     */
     public String getDisplayText() {
         return displayText;
     }
 
+    /**
+    * setter
+    * @param displayText 
+    */
     public void setDisplayText(String displayText) {
         this.displayText = displayText;
     }
 
+    /**
+     * getter String
+     * @return 
+     */
     public String getSource() {
         return source;
     }
 
+   /**
+    * setter
+    * @param source 
+    */
     public void setSource(String source) {
         this.source = source;
     }
     
+    /**
+     * getter String
+     * @return 
+     */
     public JsonObject getContent(){
         JsonObject json = Json.createObjectBuilder()
             .add(SPEECH, speech)

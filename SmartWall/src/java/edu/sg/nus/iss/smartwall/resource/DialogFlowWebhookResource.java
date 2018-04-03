@@ -20,9 +20,17 @@ import javax.ws.rs.core.MediaType;
 @Path("/dialogflowwebhook")
 public class DialogFlowWebhookResource {
 
+    /**
+     * object
+     */
     @Inject
     private ServiceMainController serviceMainController;
 
+    /**
+     * post method
+     * @param body
+     * @return Response
+     */ 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(JsonObject body) {

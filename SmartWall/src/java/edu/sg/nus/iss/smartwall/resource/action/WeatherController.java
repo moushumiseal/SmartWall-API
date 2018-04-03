@@ -19,20 +19,28 @@ public class WeatherController {
 
     private String geocity;
 
+    /**
+     * getter
+     * @return String
+     */
     public String getGeocity() {
 
         return geocity;
     }
 
+    /**
+     * setter
+     * @param geocity 
+     */
     public void setGeocity(String geocity) {
 
         this.geocity = geocity;
     }
 
-    public WeatherController() {
-
-    }
-
+    /**
+     * process request
+     * @return ApiResponse
+     */
     public ApiResponse process() {
 
         StringBuffer speech = new StringBuffer();

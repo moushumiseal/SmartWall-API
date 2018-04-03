@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 /**
- * BusController class is the usecase controller class for displaying the
+ * BusController class is the use case controller class for displaying the
  * Shuttle Bus details.
  *
  * @author Moushumi Seal
@@ -22,33 +22,33 @@ public class BusController {
     private String busstopName;
     private static final long INTERVAL = 15; // Buses arrive at intervals of 15 minutes
 
-    public BusController() {
-
-    }
-
+    /**
+     * return bus stop names
+     * @return  String
+     */
     public String getBusstopName() {
         return busstopName;
     }
 
+    /**
+     * setter
+     * @param busstopName 
+     */
     public void setBusstopName(String busstopName) {
         this.busstopName = busstopName;
     }
 
-    private void init() {
-        this.buses = new HashMap<>();
-
-        this.buses.put("A1", LocalTime.parse("07:00:00"));
-        this.buses.put("B1", LocalTime.parse("07:05:00"));
-        this.buses.put("D1", LocalTime.parse("07:10:00"));
-        this.buses.put("A2", LocalTime.parse("07:15:00"));
-
-    }
-
+    /**
+     * process request
+     * @return ApiResponse 
+     */
     public ApiResponse process() {
-        init();
+        
+        buses = Constants.getbuses();
+        
         StringBuilder sp = new StringBuilder();
         StringBuilder dp = new StringBuilder();
-        long remainder = 0;
+     
         sp.append("speech: To go to ")
                 .append(this.busstopName)
                 .append(" you can take ");
@@ -101,19 +101,27 @@ public class BusController {
         return new ApiResponse(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
     }
 
+    /**
+     * compute arrival time
+     * @param startTime
+     * @return  String
+     */
     private String computeArrivingTime(LocalTime startTime) {
         LocalTime now = LocalTime.now();
         StringBuilder sb = new StringBuilder();
         long diff = ChronoUnit.MINUTES.between(startTime, now);
+        
         if (diff % INTERVAL == 0) {
+            
             sb.append("\nNext Bus : Arriving")
                     .append("\nSubsequent bus: ")
                     .append(INTERVAL)
                     .append(" minutes");
         } else {
+            
             sb.append("\nNext Bus : ")
                     .append((INTERVAL - (diff % INTERVAL)))
-                    .append("minutes")
+                    .append(" minutes")
                     .append("\nSubsequent bus: ")
                     .append(INTERVAL + (INTERVAL - (diff % INTERVAL)))
                     .append(" minutes");

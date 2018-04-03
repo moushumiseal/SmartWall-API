@@ -19,7 +19,12 @@ import javax.ws.rs.core.MediaType;
  */
 public class Service {
     
-    
+    /**
+     * get the constructed URL
+     * @param basepath
+     * @param query
+     * @return String
+     */
     public static String getURL(String basepath , String query){
         
         String url = null;

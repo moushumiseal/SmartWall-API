@@ -15,6 +15,11 @@ import javax.ws.rs.ext.Provider;
 @PreMatching
 public class SmartWallFilter implements ContainerRequestFilter {
 
+    /**
+     * filter to check header
+     * @param requestContext
+     * @throws IOException 
+     */
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         System.out.println("*******Request:="+requestContext.getUriInfo().getRequestUri());

@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * ServiceMainController class is a controller class that receives a service
- * request and passes it to that usecase controller for processing of that
+ * request and passes it to that use case controller for processing of that
  * request.
  *
  * @author Moushumi Seal
@@ -35,10 +35,18 @@ public class ServiceMainController implements Serializable {
     @EJB
     private BusController busController;
 
+    /**
+     * default constructor
+     */
     public ServiceMainController() {
 
     }
 
+    /**
+     * process request
+     * @param body
+     * @return  Response
+     */
     public Response requestService(JsonObject body) {
         ApiResponse apiResponse = null;
         Response response = null;

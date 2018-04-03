@@ -1,6 +1,5 @@
 package edu.sg.nus.iss.smartwall.resource;
 
-import edu.sg.nus.iss.smartwall.business.EventBean;
 import edu.sg.nus.iss.smartwall.resource.action.BusController;
 import edu.sg.nus.iss.smartwall.resource.action.DictionaryController;
 import edu.sg.nus.iss.smartwall.resource.action.NewsController;
@@ -15,6 +14,9 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
 /**
+ * ServiceMainController class is a controller class that receives a service
+ * request and passes it to that usecase controller for processing of that
+ * request.
  *
  * @author Moushumi Seal
  */
@@ -23,17 +25,15 @@ public class ServiceMainController implements Serializable {
 
     // Injections
     @EJB
-    private WeatherController temperatureService;
+    private WeatherController temperatureController;
     @EJB
-    private EventBean eventBean;
+    private NewsController newsController;
     @EJB
-    private NewsController newsService;
+    private DictionaryController dictionaryController;
     @EJB
-    private DictionaryController dictionaryService;
+    private RestaurantController restaurantController;
     @EJB
-    private RestaurantController restaurantService;
-    @EJB
-    private BusController busService;
+    private BusController busController;
 
     public ServiceMainController() {
 
@@ -47,45 +47,38 @@ public class ServiceMainController implements Serializable {
 
         switch (apiAction.toLowerCase()) {
 
-            case Constants.ACTION_TEMPERATURE:
+            case Constants.ACTION_WEATHER:
 
-                System.out.println(Constants.ACTION_TEMPERATURE);
-                temperatureService.setGeocity(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.PARAM_CITY).toLowerCase());
-                apiResponse = temperatureService.process();
-                break;
-
-            case Constants.ACTION_EVENT:
-
-                System.out.println(Constants.ACTION_EVENT);
-
-                apiResponse = eventBean.process(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.PARAM_EVENT_NAME));
+                System.out.println(Constants.ACTION_WEATHER);
+                temperatureController.setGeocity(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.CITY).toLowerCase());
+                apiResponse = temperatureController.process();
                 break;
 
             case Constants.ACTION_NEWS:
 
                 System.out.println(Constants.ACTION_NEWS);
 
-                apiResponse = newsService.process();
+                apiResponse = newsController.process();
                 break;
 
             case Constants.ACTION_DICTIONARY:
 
                 System.out.println(Constants.ACTION_DICTIONARY);
-                dictionaryService.setWord(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.PARAM_WORD));
-                apiResponse = dictionaryService.process();
+                dictionaryController.setWord(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.WORD));
+                apiResponse = dictionaryController.process();
                 break;
             case Constants.ACTION_RESTAURANT:
 
                 System.out.println(Constants.ACTION_RESTAURANT);
 
-                apiResponse = restaurantService.process();
+                apiResponse = restaurantController.process();
                 break;
 
             case Constants.ACTION_BUSSTOP:
 
                 System.out.println(Constants.ACTION_BUSSTOP);
-                busService.setBusstopName(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.PARAM_BUS_STOP).toLowerCase());
-                apiResponse = busService.process();
+                busController.setBusstopName(result.getJsonObject(Constants.PARAM_PARAMETERS).getString(Constants.PARAM_BUS_STOP).toLowerCase());
+                apiResponse = busController.process();
                 break;
             default:
 

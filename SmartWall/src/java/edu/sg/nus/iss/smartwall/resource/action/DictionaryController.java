@@ -14,18 +14,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * DictionaryController class is the usecase controller class for displaying the
+ * meaning of a given word.
  *
  * @author Moushumi Seal
+ *
  */
 @Stateless
 public class DictionaryController {
-
-    public static final String LANGUAGE = "en";
-    public static final String RESULTS = "results";
-    public static final String LEXICAL_ENTRIES = "lexicalEntries";
-    public static final String SENSES = "senses";
-    public static final String ENTRIES = "entries";
-    public static final String DEFINITIONS = "definitions";
 
     private String word;
 
@@ -41,10 +37,13 @@ public class DictionaryController {
     }
 
     public ApiResponse process() {
+
         URL url;
-        String speech = "", displayText = "";
+        String speech, displayText;
+        displayText = "";
+
         try {
-            url = new URL(Constants.DICTIONARY_URL + "/" + LANGUAGE + "/" + word);
+            url = new URL(Constants.DICTIONARY_URL + "/" + Constants.LANGUAGE + "/" + word);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setRequestProperty("app_id", Constants.DICTIONARY_APP_ID);
@@ -52,28 +51,25 @@ public class DictionaryController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             StringBuilder response = new StringBuilder();
 
-            String line = null;
-            String output = "";
+            String line;
+            String output;
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
-            
+
             JSONObject result = new JSONObject(response.toString());
-            
-    
-            output = result.getJSONArray(RESULTS).getJSONObject(0)
-                        .getJSONArray(LEXICAL_ENTRIES).getJSONObject(0)
-                        .getJSONArray(ENTRIES).getJSONObject(0)
-                        .getJSONArray(SENSES).getJSONObject(0)
-                        .getJSONArray(DEFINITIONS).toString();
+
+            output = result.getJSONArray(Constants.RESULTS).getJSONObject(0)
+                    .getJSONArray(Constants.LEXICAL_ENTRIES).getJSONObject(0)
+                    .getJSONArray(Constants.ENTRIES).getJSONObject(0)
+                    .getJSONArray(Constants.SENSES).getJSONObject(0)
+                    .getJSONArray(Constants.DEFINITIONS).toString();
 
             speech = "speech: According to the Oxford Dictionary, the meaning of "
-                + word
-                + " is "
-                + output.substring(2, output.length()-2);
-            
-            
-            
+                    + word
+                    + " is "
+                    + output.substring(2, output.length() - 2);
+
             displayText = speech;
 
         } catch (IOException | JSONException ex) {

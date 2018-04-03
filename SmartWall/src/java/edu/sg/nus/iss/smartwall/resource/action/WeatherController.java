@@ -38,7 +38,7 @@ public class WeatherController {
         StringBuffer speech = new StringBuffer();
         StringBuffer displayText = new StringBuffer();
 
-        if (geocity.equalsIgnoreCase("singapore") || geocity == null || geocity.isEmpty()) {
+        if (geocity == null || geocity.equalsIgnoreCase("singapore") || geocity.trim().isEmpty()) {
             geocity = "Clementi";
         }
 

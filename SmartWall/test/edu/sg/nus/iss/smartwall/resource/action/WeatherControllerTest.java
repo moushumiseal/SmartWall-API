@@ -60,4 +60,46 @@ public class WeatherControllerTest {
         assertEquals("weather", resultResponse.getSource());
     }
     
+    /**
+     * Test of process method, of class WeatherController.
+     */
+    @Test
+    public void testProcessBlankCity() throws Exception {
+        System.out.println("testProcessInvalidCity");
+        weatherService.setGeocity(" ");
+        String expResult = "speech:The temperature at Singapore ";
+        ApiResponse resultResponse = weatherService.process();
+        String result[] = resultResponse.getSpeech().split("is");
+        assertEquals(expResult, result[0]);
+        assertEquals("weather", resultResponse.getSource());
+    }
+    
+    /**
+     * Test of process method, of class WeatherController.
+     */
+    @Test
+    public void testProcessEmptyCity() throws Exception {
+        System.out.println("testProcessInvalidCity");
+        weatherService.setGeocity("");
+        String expResult = "speech:The temperature at Singapore ";
+        ApiResponse resultResponse = weatherService.process();
+        String result[] = resultResponse.getSpeech().split("is");
+        assertEquals(expResult, result[0]);
+        assertEquals("weather", resultResponse.getSource());
+    }
+    
+    /**
+     * Test of process method, of class WeatherController.
+     */
+    @Test
+    public void testProcessAlphaNumericCity() throws Exception {
+        System.out.println("testProcessInvalidCity");
+        weatherService.setGeocity("asdsad123");
+        String expResult = "speech:I didn't get that. Can you say it again?";
+        ApiResponse resultResponse = weatherService.process();
+        String result[] = resultResponse.getSpeech().split(",");
+        assertEquals(expResult, result[0]);
+        assertEquals("weather", resultResponse.getSource());
+    }
+    
 }

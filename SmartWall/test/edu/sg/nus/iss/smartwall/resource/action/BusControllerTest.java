@@ -28,24 +28,89 @@ public class BusControllerTest {
      */
     
     /**
-     * With valid data
+     * With Invalid data
      * @throws Exception 
      */
     @Test
-    public void testProcessValidData() throws Exception {
+    public void testProcessInValidData() throws Exception {
         System.out.println("BusService: process()");
         busService.setBusstopName("library");
         String expResult = "I didn't get that. Can you say it again?";
         ApiResponse result = busService.process();
         assertEquals(expResult, result.getSpeech());
     }
-
+    
     /**
      * With Invalid data
      * @throws Exception 
      */
     @Test
-    public void testProcessInvalidData() throws Exception {
+    public void testProcessEmptyData() throws Exception {
+        System.out.println("BusService: process()");
+        busService.setBusstopName("");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = busService.process();
+        assertEquals(expResult, result.getSpeech());
+    }
+    
+    /**
+     * With Invalid data
+     * @throws Exception 
+     */
+    @Test
+    public void testProcessBlankData() throws Exception {
+        System.out.println("BusService: process()");
+        busService.setBusstopName("   ");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = busService.process();
+        assertEquals(expResult, result.getSpeech());
+    }
+    
+    /**
+     * With Invalid data
+     * @throws Exception 
+     */
+    @Test
+    public void testProcessNumberData() throws Exception {
+        System.out.println("BusService: process()");
+        busService.setBusstopName("1233");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = busService.process();
+        assertEquals(expResult, result.getSpeech());
+    }
+    
+    /**
+     * With Invalid data
+     * @throws Exception 
+     */
+    @Test
+    public void testProcessAlphaNumericeData() throws Exception {
+        System.out.println("BusService: process()");
+        busService.setBusstopName("assd1233");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = busService.process();
+        assertEquals(expResult, result.getSpeech());
+    }
+    
+    /**
+     * With Invalid data
+     * @throws Exception 
+     */
+    @Test
+    public void testProcessNullData() throws Exception {
+        System.out.println("BusService: process()");
+        busService.setBusstopName("Null");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = busService.process();
+        assertEquals(expResult, result.getSpeech());
+    }
+    
+    /**
+     * With valid data
+     * @throws Exception 
+     */
+    @Test
+    public void testProcessvalidData(){
         System.out.println("BusService: process()");
         busService.setBusstopName("kent ridge");
         String expResult = "speech: To go to kent ridge you can take A2.";

@@ -51,4 +51,34 @@ public class DictionaryControllerTest {
         assertEquals("meaning", result.getSource());
     }
     
+    @Test
+    public void testProcessBlankWord() throws Exception {
+        System.out.println("DictionaryService: testProcessInvalidWord()");
+        dictionaryService.setWord("   ");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = dictionaryService.process();
+        assertEquals(expResult, result.getSpeech());
+        assertEquals("meaning", result.getSource());
+    }
+    
+    @Test
+    public void testProcessEmptyWord() throws Exception {
+        System.out.println("DictionaryService: testProcessInvalidWord()");
+        dictionaryService.setWord("");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = dictionaryService.process();
+        assertEquals(expResult, result.getSpeech());
+        assertEquals("meaning", result.getSource());
+    }
+    
+    @Test
+    public void testProcessAlphaNumbericWord() throws Exception {
+        System.out.println("DictionaryService: testProcessInvalidWord()");
+        dictionaryService.setWord("aaa24");
+        String expResult = "I didn't get that. Can you say it again?";
+        ApiResponse result = dictionaryService.process();
+        assertEquals(expResult, result.getSpeech());
+        assertEquals("meaning", result.getSource());
+    }
+    
 }

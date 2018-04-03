@@ -1,103 +1,91 @@
 package edu.sg.nus.iss.smartwall.resource.action;
 
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.resource.helper.Service;
-import edu.sg.nus.iss.smartwall.resource.helper.ApiHelper;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import javax.ejb.Stateless;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 /**
+ * WeatherController class is the usecase controller class for displaying the
+ * weather forecast of a given city .
  *
- * @author ethi
+ * @author Aakash
+ *
  */
 @Stateless
-public class WeatherController{ 
+public class WeatherController {
 
     private String geocity;
 
-    public static final String CITY = "geo-city";
-    public static final String QUERY = "query";
-    public static final String RESULTS = "results";
-    public static final String CHANNEL = "channel";
-    public static final String ITEM = "item";
-    public static final String CONDITIONS = "condition";
-    public static final String TEMP = "temp";
-    public static final String TEXT = "text";
-    public static final String CODE = "code";
-    public static final String FORECAST = "forecast";
-    public static final String DATE = "date";
-    public static final String HIGH = "high";
-    public static final String LOW = "low";
-    
-        
     public String getGeocity() {
-        
+
         return geocity;
     }
 
     public void setGeocity(String geocity) {
-        
+
         this.geocity = geocity;
     }
 
     public WeatherController() {
-      
-    }    
-    
-    public Service process() {
-        
+
+    }
+
+    public ApiResponse process() {
+
         StringBuffer speech = new StringBuffer();
         StringBuffer displayText = new StringBuffer();
-        
-        if(geocity.equalsIgnoreCase("singapore") || geocity == null || geocity.isEmpty()){
+
+        if (geocity.equalsIgnoreCase("singapore") || geocity == null || geocity.isEmpty()) {
             geocity = "Clementi";
         }
-        
+
         String query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"" + geocity + "\")";
-        
-        String URL = ApiHelper.getURL(Constants.TEMPERATURE_URL + "?format=json&q=" , query);
-        
-        JsonObject result = ApiHelper.getHttpResponse(URL);
+
+        String URL = Service.getURL(Constants.WEATHER_URL + "?format=json&q=", query);
+
+        JsonObject result = Service.getHttpResponse(URL);
         speech.append("speech:");
         displayText.append(", display:");
         System.out.println(result);
-        if(result.getJsonObject(QUERY).isNull(RESULTS)){
+        if (result.getJsonObject(Constants.QUERY).isNull(Constants.RESULTS)) {
             speech.append("I didn't get that. Can you say it again?");
-            
+
             displayText.append("Sorry, something went wrong while fetching the weather details for ")
                     .append(geocity);
-        }else {
-            
-            if(geocity.equalsIgnoreCase("Clementi")){
+        } else {
+
+            if (geocity.equalsIgnoreCase("Clementi")) {
                 geocity = "Singapore";
             }
-            String temperature = result.getJsonObject(QUERY)
-                              .getJsonObject(RESULTS)
-                              .getJsonObject(CHANNEL)
-                              .getJsonObject(ITEM)
-                              .getJsonObject(CONDITIONS)
-                              .getString(TEMP);
-            
-            String weather = result.getJsonObject(QUERY)
-                                  .getJsonObject(RESULTS)
-                                  .getJsonObject(CHANNEL)
-                                  .getJsonObject(ITEM)
-                                  .getJsonObject(CONDITIONS)
-                                  .getString(TEXT);
+            String temperature = result.getJsonObject(Constants.QUERY)
+                    .getJsonObject(Constants.RESULTS)
+                    .getJsonObject(Constants.CHANNEL)
+                    .getJsonObject(Constants.ITEM)
+                    .getJsonObject(Constants.CONDITIONS)
+                    .getString(Constants.TEMP);
 
-            String code = result.getJsonObject(QUERY)
-                                  .getJsonObject(RESULTS)
-                                  .getJsonObject(CHANNEL)
-                                  .getJsonObject(ITEM)
-                                  .getJsonObject(CONDITIONS)
-                                  .getString(CODE);
+            String weather = result.getJsonObject(Constants.QUERY)
+                    .getJsonObject(Constants.RESULTS)
+                    .getJsonObject(Constants.CHANNEL)
+                    .getJsonObject(Constants.ITEM)
+                    .getJsonObject(Constants.CONDITIONS)
+                    .getString(Constants.TEXT);
 
-            JsonArray sevenDaysForcast =  result.getJsonObject(QUERY)
-                                        .getJsonObject(RESULTS)
-                                        .getJsonObject(CHANNEL)
-                                        .getJsonObject(ITEM)
-                                        .getJsonArray(FORECAST);
+            String code = result.getJsonObject(Constants.QUERY)
+                    .getJsonObject(Constants.RESULTS)
+                    .getJsonObject(Constants.CHANNEL)
+                    .getJsonObject(Constants.ITEM)
+                    .getJsonObject(Constants.CONDITIONS)
+                    .getString(Constants.CODE);
+
+            JsonArray sevenDaysForcast = result.getJsonObject(Constants.QUERY)
+                    .getJsonObject(Constants.RESULTS)
+                    .getJsonObject(Constants.CHANNEL)
+                    .getJsonObject(Constants.ITEM)
+                    .getJsonArray(Constants.FORECAST);
             double tempInCelsius = fahrenheitToCelsius(Double.parseDouble(temperature));
             speech.append("The temperature at ")
                     .append(geocity)
@@ -108,32 +96,39 @@ public class WeatherController{
                     .append(weather);
             /*speech.append(", code: ")
                     .append(code);*/
-            
+
             displayText.append("The weather forecast for next seven days -");
-            
-            for(int i = 1; i <= 7; i++){
-                double highTempInCelsius = fahrenheitToCelsius(Double.parseDouble(sevenDaysForcast.getJsonObject(i).getString(HIGH)));
-                double lowTempInCelsius = fahrenheitToCelsius(Double.parseDouble(sevenDaysForcast.getJsonObject(i).getString(LOW)));
+
+            for (int i = 1; i <= 7; i++) {
+                double highTempInCelsius = fahrenheitToCelsius(Double.parseDouble(sevenDaysForcast.getJsonObject(i).getString(Constants.HIGH)));
+                double lowTempInCelsius = fahrenheitToCelsius(Double.parseDouble(sevenDaysForcast.getJsonObject(i).getString(Constants.LOW)));
                 displayText.append("\nDate : ")
-                           .append(sevenDaysForcast.getJsonObject(i).getString(DATE))
-                           .append(", High : ")
-                           .append(highTempInCelsius)
-                           .append(" Celsius")
-                           .append(", Low : ")
-                           .append(lowTempInCelsius)
-                           .append(" Celsius")
-                           .append(", Weather : ")
-                           .append(sevenDaysForcast.getJsonObject(i).getString(TEXT));
+                        .append(sevenDaysForcast.getJsonObject(i).getString(Constants.DATE))
+                        .append(", High : ")
+                        .append(highTempInCelsius)
+                        .append(" Celsius")
+                        .append(", Low : ")
+                        .append(lowTempInCelsius)
+                        .append(" Celsius")
+                        .append(", Weather : ")
+                        .append(sevenDaysForcast.getJsonObject(i).getString(Constants.TEXT));
             }
 
             speech.append(displayText.toString());
         }
 
-        return new Service(speech.toString() , displayText.toString() , Constants.ACTION_TEMPERATURE);
+        return new ApiResponse(speech.toString(), displayText.toString(), Constants.ACTION_WEATHER);
     }
-    
+
+    /**
+     * This method is used to convert the temperature from Fahrenheit to
+     * Celsius.
+     *
+     * @param f Temperature in Fahrenheit
+     * @return Temperature in Celsius
+     */
     private double fahrenheitToCelsius(double f) {
-        double celsius = 5 * (f-32)/9;
+        double celsius = 5 * (f - 32) / 9;
         return Math.round(celsius * 100.0) / 100.0;
     }
 }

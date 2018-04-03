@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import edu.sg.nus.iss.smartwall.util.Constants;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -14,8 +9,11 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 /**
+ * BusController class is the usecase controller class for displaying the
+ * Shuttle Bus details.
  *
  * @author Moushumi Seal
+ *
  */
 @Stateless
 public class BusController {
@@ -46,7 +44,7 @@ public class BusController {
 
     }
 
-    public Service process() {
+    public ApiResponse process() {
         init();
         StringBuilder sp = new StringBuilder();
         StringBuilder dp = new StringBuilder();
@@ -69,14 +67,14 @@ public class BusController {
                 sp.append("A2.");
                 dp.append("A2").append(computeArrivingTime(buses.get("A2")));
                 sp.append(dp.toString());
-                
+
                 break;
             case "utown":
                 sp.append("B1 or D1.");
                 dp.append("B1").append(computeArrivingTime(buses.get("B1")));
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
                 sp.append(dp.toString());
-                
+
                 break;
             case "computer centre":
             case "computer center":
@@ -86,7 +84,7 @@ public class BusController {
                 dp.append("\nB1").append(computeArrivingTime(buses.get("B1")));
                 dp.append("\nD1 ").append(computeArrivingTime(buses.get("D1")));
                 sp.append(dp.toString());
-                
+
                 break;
             default:
                 sp.setLength(0);
@@ -95,11 +93,12 @@ public class BusController {
 
                 dp.append("display: ")
                         .append("Sorry, I don't know which bus to take for ")
-                        .append(this.busstopName);;
+                        .append(this.busstopName);
+                ;
                 break;
         }
-        
-        return new Service(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
+
+        return new ApiResponse(sp.toString(), dp.toString(), Constants.ACTION_BUSSTOP);
     }
 
     private String computeArrivingTime(LocalTime startTime) {

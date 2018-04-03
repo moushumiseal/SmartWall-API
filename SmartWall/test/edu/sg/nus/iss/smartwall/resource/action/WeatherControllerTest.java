@@ -5,7 +5,7 @@
  */
 package edu.sg.nus.iss.smartwall.resource.action;
 
-import edu.sg.nus.iss.smartwall.resource.helper.Service;
+import edu.sg.nus.iss.smartwall.resource.helper.ApiResponse;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -40,7 +40,7 @@ public class WeatherControllerTest {
         System.out.println("testProcessValidCity");
         weatherService.setGeocity("kolkata");
         String expResult = "speech:The temperature at kolkata ";
-        Service resultResponse = weatherService.process();
+        ApiResponse resultResponse = weatherService.process();
         String result[] = resultResponse.getSpeech().split("is");
         assertEquals(expResult, result[0]);
         assertEquals("weather", resultResponse.getSource());
@@ -54,7 +54,7 @@ public class WeatherControllerTest {
         System.out.println("testProcessInvalidCity");
         weatherService.setGeocity("India");
         String expResult = "speech:I didn't get that. Can you say it again?";
-        Service resultResponse = weatherService.process();
+        ApiResponse resultResponse = weatherService.process();
         String result[] = resultResponse.getSpeech().split(",");
         assertEquals(expResult, result[0]);
         assertEquals("weather", resultResponse.getSource());

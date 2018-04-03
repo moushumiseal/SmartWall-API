@@ -1,63 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.sg.nus.iss.smartwall.resource.helper;
 
-import javax.json.Json;
+import edu.sg.nus.iss.smartwall.resource.DialogFlowWebhookResource;
+import edu.sg.nus.iss.smartwall.util.Constants;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.JsonObject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author ethi
+ * @author Ashish
  */
 public class Service {
     
-    public static final String SPEECH = "speech";
-    public static final String DISPLAY_TEXT = "displayText";
-    public static final String SOURCE = "source";
-
-    private String speech;
-    private String displayText;
-    private String source;
-
-    public Service(String speech, String displayText, String source) {
-        this.speech = speech;
-        this.displayText = displayText;
-        this.source = source;
-    }
-
-    public String getSpeech() {
-        return speech;
-    }
-
-    public void setSpeech(String speech) {
-        this.speech = speech;
-    }
-
-    public String getDisplayText() {
-        return displayText;
-    }
-
-    public void setDisplayText(String displayText) {
-        this.displayText = displayText;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
+    
+    public static String getURL(String basepath , String query){
+        
+        String url = null;
+        
+        try {
+            
+            url = basepath + URLEncoder.encode(query,Constants.UTF);
+            
+        } catch (UnsupportedEncodingException ex) {
+            
+            Logger.getLogger(DialogFlowWebhookResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return url;
     }
     
-    public JsonObject getContent(){
-        JsonObject json = Json.createObjectBuilder()
-            .add(SPEECH, speech)
-            .add(DISPLAY_TEXT, displayText)
-            .add(SOURCE,source)
-            .build();
-        return json;
+    /**
+     * This method is used to call the respective API to get the response.
+     * 
+     * @param url
+     * @return JSON Response obtained from the API.
+     */
+    public static JsonObject getHttpResponse(String url){
+        
+        Logger.getLogger(DialogFlowWebhookResource.class.getName()).log(Level.INFO, url);
+        System.out.println("___***********____"+url);
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(url);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        return invocation.get(JsonObject.class);
     }
 }
